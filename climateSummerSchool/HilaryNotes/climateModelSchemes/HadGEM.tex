@@ -1,0 +1,163 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Atmospheric component of HadGEM (New Dynamics)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list0}
+
+\item Designed to be more efficient and more accurate than HadCM3
+
+\item Equations solved
+\begin{list1}
+\item Non-hydrostatic Euler equations
+\item Deep Atmosphere
+\item 3D Coriolis
+\end{list1}
+
+\item Spatial Discretisation -- some changes from HadCM3
+\begin{list1}
+\item Semi-Lagrangian
+\item Cubic or quintic finite difference interpolation onto departure points
+\item Lat-lon C-grid
+\item Charney-Phillips vertical grid
+\item Fixed, height based vertical coordinates (no dependence on pressure)
+\item No filtering towards the poles
+\item Much less explicit diffusion needed
+\end{list1}
+
+\item Temporal Discretisation
+\begin{list1}
+\item {\color{purple}\bf SISL} Semi-implicit semi-Lagrangian
+\item Two time level off centred scheme
+\end{list1}
+
+\item Exact Conservation of:
+\begin{list1}
+\item Mass only by employing Eulerian advection of mass
+\end{list1}
+
+\end{list0}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadGEM and New Dynamics Publications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+\begin{list0}
+\item \bibentry{DCM+05}
+\item \bibentry{JDB+06}
+\item \bibentry{MRP+06}
+\end{list0}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadGEM -- Reasons for choices of equations solved}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\item Equations solved
+\begin{list1}
+\item Non-hydrostatic Euler equations and deep atmosphere
+\begin{list2}
+\item More accurate at higher resolution
+\item Not necessarily much more expensive
+\end{list2}
+
+\end{list1}
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Semi-Lagrangian}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+3 Steps in semi-Lagrangian:
+\begin{enumerate}
+\item Find departure points: where did the flow depart from at the previous time step to arrive at this grid point. \\
+Need predictor step then corrector to estimate velocity at the mid-time between previous and current time steps
+
+\item Interpolate all fields $\psi$ (eg $u$, $v$, $w$, $T$, $p$) from fixed grid at old time onto departure points \\
+Needs $\ge$ cubic interpolation to reduce atificial diffusion
+\item Integrate forcing along trajectories. Then we have new time level values:\\
+$\psi^n_i = \psi(\tilde{X}^{n-1}_i) + \int_C F^{n-\frac{1}{2}}_\text{mid-point} dt$
+
+\hspace{-3ex}Why:
+\begin{list2}
+\item Much larger, accurate time steps possible $\rightarrow$ efficiency $\times 4$!
+\item Less need for polar filtering
+\item But conservation becomes very difficult.
+\end{list2}
+
+\hspace{-3ex}HadGEM
+\begin{list2}
+\item Cubic or quintic finite difference interpolation onto departure points
+\item In order to guarantee conservation of mass to machine precision, Helmholtz equation solved implicitly using Eulerian discretisaion.
+\item Global conservation corrections for tracers.
+\item $\therefore$ inconsistent advection of mass and tracers :-(
+\end{list2}
+\end{enumerate}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadGEM -- Reasons for Discretisation Choices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+\begin{list1}
+
+\item Finite difference -- still good for local area model
+
+\item Lat-lon C-grid :-)
+
+\item Charney-Phillips vertical grid\\
+$\rightarrow$ better representation of layer clouds, reducing biases in sub-tropical stratocumulus regions
+
+\item Fixed, height based vertical coordinates (no dependence on pressure)
+\begin{list2}
+\item Height above the ground near the ground. Smoothly varying to flat vertical levels
+\item Can no longer used pressure based coordinate because non-hydrostatic pressure may not be monotonic with height
+\item May enhance spurious mixing along isobaric surfaces
+\end{list2}
+
+\item Much less explicit diffusion needed
+\begin{list2}
+\item Due to choice of discretisation without computational modes (C-grid and Charney-Phillips)
+\item Semi-Lagrangian advection is inherently diffusive
+\end{list2}
+
+\end{list1}
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadGEM Problems}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+\begin{list0}
+\item Tracers not conserved
+\item Cannot scale to 10,000 processors. Why not?
+
+\begin{minipage}{0.6\linewidth}
+\includegraphics[width=\linewidth]{../../../pLinks/graphics/meshes+latLon+constant+mesh.pdf}
+
+\vspace{-0.55\linewidth} \hspace{2.1in}
+\includegraphics[scale=1]{figs/arrow.pdf}
+
+\vspace{0.5\linewidth}\ \\
+\end{minipage}
+\hfill
+\begin{minipage}{0.35\linewidth}
+
+\begin{list1}
+\item lat-lon grid?
+\item semi-implicit?
+\item semi-Lagrangian?
+\end{list1}
+
+\end{minipage}
+
+
+\end{list0}
+\end{slide}
+

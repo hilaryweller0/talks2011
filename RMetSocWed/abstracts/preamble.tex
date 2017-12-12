@@ -1,0 +1,162 @@
+\documentclass[12pt]{article}
+
+% margins >=2cm
+
+\textwidth 17cm
+\oddsidemargin -2mm
+\textheight 25.6cm
+\topmargin -27mm
+\footskip 18pt
+
+\parindent=0.0in
+\parskip=12pt
+
+\usepackage{graphicx, color, tabularx, setspace, url}
+%\usepackage[T1]{fontenc}
+%\usepackage[scaled]{uarial}
+%\renewcommand*\familydefault{\sfdefault}
+\renewcommand{\rmdefault}{phv} % Arial
+\renewcommand{\sfdefault}{phv} % Arial
+\usepackage{wrapfig}
+%\usepackage[justification=centering]{caption,subfig}
+\usepackage[justification=centering]{subfig}
+\usepackage[round]{natbib}
+\setlength{\bibsep}{0pt}
+\setlength{\bibhang}{3pt}
+%\renewcommand{\baselinestretch}{1.6}
+
+% tabularx stuff
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}p{#1}}
+%\renewcommand{\tabularxcolumn}[1]{>{\raggedright\arraybackslash}m{#1}}
+
+%%% modifications to make article style more compact
+\makeatletter
+
+\def\@part[#1]#2
+{
+    \refstepcounter{part}
+    {
+        \parindent \z@ \raggedright \interlinepenalty \@M
+        \normalfont \Large\bfseries
+        \partname\nobreakspace\thepart : \nobreakspace #2 %\markboth{}{}\par
+    }
+    \nobreak \vskip 1.3ex \@afterheading
+}
+\renewcommand\section
+{
+    \@startsection {section}{1}{\z@}{1ex \@plus 2ex \@minus -.2ex}%
+   {1ex \@plus 0.1ex}{\large\bfseries\raggedright}
+}
+\renewcommand\subsection
+{
+    \@startsection {subsection}{1}{\z@}{0.5ex \@plus 1ex \@minus -.2ex}%
+   {0.1ex \@plus .1ex}{\bfseries\raggedright}
+}
+\renewcommand\subsubsection
+{
+    \@startsection {subsubsection}{1}{\z@}{-0.5ex \@plus -1ex \@minus -.2ex}%
+   {0.1ex \@plus .1ex}{\normalfont\it\raggedright}
+}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {1.25ex \@plus1ex \@minus.2ex}%
+                                    {-0.4em}%
+                                    {\normalfont\normalsize\it}}
+
+\def\@maketitle
+{
+  \begin{center}%
+  \let \footnote \thanks
+    {\Large\bf \@title \par}%
+    \vskip 0.5em%
+    {\large
+      \lineskip 1em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 0.5em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  %\vskip 1.5em
+}
+
+\renewenvironment{itemize}
+   {\begin{list}{$\bullet$}{
+      \setlength{\itemsep}{0pt}
+      \setlength{\labelwidth}{1ex}
+      \setlength{\leftmargin}{2ex}
+      \setlength{\topsep}{0pt}
+     }
+   }
+   {\end{list}}
+
+\def\enumhook{}
+\def\enumerate{%
+  \ifnum \@enumdepth >\thr@@\@toodeep\else
+    \advance\@enumdepth\@ne
+    \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+      \expandafter
+      \list
+        \csname label\@enumctr\endcsname
+        {\usecounter\@enumctr\def\makelabel##1{\hss\llap{##1}}%
+          \enumhook \csname enumhook\romannumeral\the\@enumdepth\endcsname}%
+  \fi}
+
+\renewcommand{\enumhook}
+{
+    \setlength{\topsep}{2pt}
+    \setlength{\itemsep}{-4pt}
+    \setlength{\labelwidth}{1ex}
+    \setlength{\leftmargin}{3ex}
+    \raggedright
+}
+
+\renewcommand{\descriptionlabel}[1]{\parbox{\leftmargin}{\raggedleft #1.~}}
+
+\makeatother
+
+\renewcommand{\floatpagefraction}{0.95}
+
+\newcommand{\dprod} {\ensuremath{\,{\scriptscriptstyle \stackrel{\bullet}{{}}}\,}}
+\renewcommand{\vec}[1] {\ensuremath{\mathbf #1}}
+\newcommand{\eg}{{\it e.g.}}
+\newcommand{\ie}{{\it i.e.}}
+\newcommand{\de}{\ensuremath{^\circ}}
+
+% command for generating the height and PV error plots for case #1
+\newcommand{\hPVplots}[1]{
+\begin{figure}[ht]
+\begin{tabular}{cc}
+Height (m) along 90\de\ longitude & Velocity (m/s) along 90\de\ longitude \\
+\includegraphics[width=0.49\linewidth]{#1/hLon90.eps} &
+\includegraphics[width=0.49\linewidth]{#1/UfLon90.eps} \\
+Height (m) and velocity differences from initial &
+Total vorticity and velocity differences from initial \\ & \\
+\includegraphics[width=0.49\linewidth]{#1/hUfdiff.eps} &
+\includegraphics[width=0.49\linewidth]{#1/PVdiff.eps} \\
+\end{tabular}
+\end{figure}
+}
+
+% command for generating the discretisation error plots for case #1
+\newcommand{\discErrors}[1]{
+\begin{figure}[ht]
+\begin{tabular}{cc}
+$\vec{U}$ and $\nabla \dprod \vec{U}$ & $h\vec{U}$ and $\nabla \dprod h\vec{U}$ \\
+\includegraphics[width=0.49\linewidth]{#1/divu.eps} &
+\includegraphics[width=0.49\linewidth]{#1/div.eps} \\
+Discretisation error of $gh\nabla h$ normal to faces &
+Discretisation error of $2h\vec{\Omega} \times \vec{U}$ normal to faces \\
+\includegraphics[width=0.49\linewidth]{#1/ghGradhDiff.eps} &
+\includegraphics[width=0.49\linewidth]{#1/hSfxFfdotUDiff.eps} \\
+Discretisation error of $\nabla \dprod h\vec{U}\vec{U}$ normal to faces &
+Resultant $\partial /\partial t (h\vec{U})$ ($m^2s^{-2}$) \\
+\includegraphics[width=0.49\linewidth]{#1/divhUUDiff.eps} &
+\includegraphics[width=0.49\linewidth]{#1/ddtPhi.eps}
+\end{tabular}
+\end{figure}
+
+}
+\begin{document}
+\sloppy\raggedright

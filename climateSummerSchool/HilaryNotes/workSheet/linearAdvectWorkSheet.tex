@@ -1,0 +1,197 @@
+\input{preamble}
+
+\begin{document}
+
+\title{Modelling Advection}
+\author{Dr Hilary Weller \thanks{\rm{h.weller@reading.ac.uk}}
+\thanks{Thanks to John Thuburn for material from his lecture notes}}
+\date{Mon 12 September, 2011}
+\maketitle
+
+\section{Linear Advection}
+
+The concentration of a constituent of the atmosphere is denoted $\phi$. If this constituent is moved around by the wind with velocity $\vec{u}$, but there is no diffusion and no sources or sinks of the pollutant, then the concentration at time $t$ and at location $(x,y,z)$ is governed by the linear advection equation for constant density flow:
+\begin{equation}
+\frac{\partial\phi}{\partial t} + \vec{u}\dprod\nabla\phi = 0
+\label{eqn:3dAdvect}
+\end{equation}
+where $\vec{u}=(u,v,w)$ and $\nabla\phi=\bigl(\frac{\partial\phi}{\partial x},\frac{\partial\phi}{\partial y},\frac{\partial\phi}{\partial z}\bigr)$. 
+So that changes in $\phi$ are produced by the component of the wind in the same direction as gradients of $\phi$. In order to understand why the $\vec{u}\dprod\nabla(\phi)$ term leads to changes in $\phi$, consider a region of polluted atmosphere where the pollutant has concentration contours as shown below:
+
+\begin{center}
+\includegraphics[scale=0.5]{figs/contours.pdf}
+\end{center}
+
+\begin{center}\begin{minipage}{0.9\linewidth}
+\subsection{Task}
+Draw on the above figure the directions of the gradients of $\phi$ and thus mark with a $+$, $-$ or $0$ locations where $\vec{u}\dprod\nabla\phi$ is positive, negative and zero. Thus deduce where $\phi$ is increasing, decreasing or staying the same based on equation \ref{eqn:3dAdvect}. Hence overlay contours of $\phi$ at a later time.
+\end{minipage}\end{center}
+
+If $\phi$ is replaced by temperature, density or even the winds themselves,
+then equation \ref{eqn:3dAdvect} governs their changes, although can be terms on the right hand side (RHS). We will therefore focus on solving this equation in one dimension assuming that the wind is constant and uniform. If the wind in direction $x$ is $u$ then $\phi$ is governed by the equation:
+\begin{equation}
+\frac{\partial\phi}{\partial t} + ~~~~~~~~~~~~~~~~~~~.
+\label{eqn:1dAdvect}
+\end{equation}
+This equation has an analytic solution. If the initial condition is $\phi(x,0)=F(x)$ then the solution at time $t$ is $F(x-ut)$. 
+
+\section{Eulerian Finite Difference Schemes for Linear Advection}
+
+Imagine a one dimensional situation of a pollutant blowing down a street of houses (where nothing can enter or leave the street) and the wind is constant. The the distance from the upstream end of the street is $x$ and the pollutant is uniform across any cross-section of the street. In order to solve equation \ref{eqn:1dAdvect} approximately we will consider the pollutant concentration at a number of locations, $x_j = j~\delta x ~~\text{ for } j = 0,1,\ldots, n_x$, down the street where $\delta x$ is the distance between points along the street. The pollutant concentration at point $x_j$ is defined to be $\phi_j$:\\
+\begin{center}
+\includegraphics[scale=0.5]{figs/phiLine.pdf}
+\end{center}
+Starting from time $t=0$, we aim to find approximate solutions for $\phi_j$ at times $t^{(n)}$, $n=1,2,\ldots$. The solution at time $t^{(n)}$ and at position $x_j$ is denoted $\phi^{(n)}_j$.
+
+In order to calculate how $\phi$ changes from the initial conditions we must approximate gradients by finite differences over space or time. These can either be centred, or in a forwards or backwards direction. For example, the FTBS (forward in time, backward in space) approximation for equation \ref{eqn:1dAdvect} is:
+\begin{equation}
+\frac{\phi^{(n+1)}_j - \phi^{(n)}_j}{\delta t}  +u\frac{\phi^{(n)}_j - \phi^{(n)}_{j-1}}{\delta x} = 0
+\end{equation}
+This can be re-arranged to get $\phi^{(n+1)}_j$ on the LHS and all other terms on the RHS so that we can calculate $\phi$ at the new time step at all locations based on values at previous time steps.
+\begin{equation}
+\phi^{(n+1)}_j = ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+\end{equation}
+von-Neumann stability analysis can be used to prove that this scheme is stable provided that the Courant number, $C_o=\frac{u\delta t}{\delta x}$, is between zero and one. If $u<0$ then forward in space can be used instead. 
+
+FTBS is only first-order accurate in space and time. In order to achieve second-order accuracy we must use centred approximations to the gradients leading to the CTCS scheme:
+\begin{equation}
+\frac{\phi^{(n+1)}_j - \phi^{(n-1)}_j}{2\delta t} + ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+\end{equation}
+This can be re-arranged to get $\phi^{(n+1)}_j$ on the LHS and all other terms on the RHS. We can also replace $\frac{u\delta t}{\delta x}$ with $C_o$:
+\begin{equation}
+\phi^{(n+1)}_j = ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+\end{equation}
+CTCS is stable provided $|C_o|<1$. CTCS uses values from two previous time steps which are not both available at the initial time. Therefore for the first time step it is necessary to use FTCS to calculate $\phi^{(1)}_j$:
+\begin{equation}
+\frac{\phi^{(1)}_j -\phi^{(0)}_j}{\delta t} = ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+\end{equation}
+which implies that:
+\begin{equation}
+\phi^{(1)}_j = ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+\end{equation}
+
+\subsection{Finite Difference Practical}
+
+You will need the IDL files:\\
+\begin{tabularx}{\linewidth}{lL}
+\url{ctcs.pro} & Linear advection using centred time, centred space differencing\\
+\url{analyticsolution.pro} & Function to calculate the analytic solution at a given position\\
+\url{plotadvectresults.pro} & Routine to plot various results for comparison \\
+\url{legend.pro} & Auxiliary function for putting legends onto graphs \\
+\end{tabularx}\\
+
+\url{ctcs.pro} advects the initial conditions:
+\begin{equation}
+\phi(x,0) =
+\begin{cases}
+\frac{1}{2}(1 + \cos(4\pi(x-\frac{1}{2})) &
+\text{if } \frac{1}{4} \le x \le \frac{3}{4} \\
+0 & \text{otherwise.}
+\end{cases}
+\end{equation}
+with constant $u$ and with fixed values of $\phi$ at either end. The constant and variables used in \url{ctcs.pro} are defined as:\\
+\begin{tabular}{llll}
+constant & \url{nx} & 81 & number of \url{x} points \\
+array & \url{x} & $0,\frac{1}{40},\frac{2}{40},\ldots\frac{j}{40},\ldots 2$ & all the \url{x} positions\\
+constant & \url{u} & 1.25 & wind speed from left to right \\
+constant & \url{dt} & 0.01 & time step\\
+constant & \url{nsteps} & 80 & number of time steps\\
+array & \url{phi} & & concentration at each \url{x} at the latest time step\\
+array & \url{phiOld} && \url{phi} from the previous time step\\
+array & \url{phiOldOld} && \url{phi} from the time step before \url{phiOld}\\
+\end{tabular}
+\url{ctcs.pro} calculates \url{phi} at each time step and plots the results. After the final time step the results are written to file \url{`CTCS.dat'}.
+
+{\ \\ \bf Tasks}
+\begin{enumerate}
+\item On your computer, move to the directory containing the \url{idl} files
+\item Study \url{ctcs.pro} to ensure that you know how the code corresponds to the equations in these notes
+\item Run \url{idl} by typing \url{idl} at the command line. (Or run the free version \url{gdl})
+\item Run \url{ctcs.pro} by typing \url{ctcs} at the \url{idl} command line
+\item If you modify \url{ctcs.pro} and want to re-run then you must first re-compile in \url{idl} by typing \url{.comp} \url{ctcs} before typing \url{ctcs} again.
+\item Change the time step and see how this affects the results
+\item To get help on \url{idl} type \url{?} at the \url{idl} command line
+\item Copy \url{ctcs.pro} to \url{ftbs.pro}
+\item Edit \url{ftbs.pro} to use forward in time and backward in space differencing and write the results to file \url{`FTBS.dat'}.
+\item To compare results using each scheme, plot them on the same graph by running \url{plotadvectresults}
+\item What are your conclusions about the accuracy and boundedness of each of the schemes?
+\item Time permitting, also copy \url{ctcs.pro} to \url{ftcs.pro} and implement forward in time, centred in space, writing results to  \url{`FTCS.dat'}. So that this algorithm runs stably you will need to reduce the time step. What Courant number is needed?
+\item Time permitting, modify \url{ctcs.pro} to have cyclic boundaries and run it for longer.
+\end{enumerate}
+
+FTCS and CTFS are unstable for all time steps. This can be proved using von-Neumann stability analysis. However they can be run for a short time before diverging.
+
+\section{Robert-Asselin time filtering}
+
+The centred in time (or leapfrog) scheme suffers from a computational mode: the solution can develop spurious oscillations from one time step to the next. These can be damped by a filter, for example, the Robert-Asselin filter replaces the value at the old time step with a blended value:
+\begin{equation}
+\overline{\phi}^{(n-1)} = \phi^{(n-1)} + \varepsilon \bigl(\phi^{(n)} - 2\phi^{(n-1)} + \overline{\phi}^{(n-2)}\bigr)
+\end{equation}
+This filter introduces some artificial damping, so $\varepsilon$ should be small. 
+
+\subsection{Tasks}
+\begin{enumerate}
+\item Introduce the Robert-Asselin filter into the CTCS code. \ie\ at each time step compute:
+\begin{verbatim}
+phi = phiOldOld - ...
+\end{verbatim}
+Then after $\phi$ is calculated at each grid point, compute:
+\begin{verbatim}
+phiOld = phiOld + epsilon*(phi - 2*phiOld + phiOldOld)
+\end{verbatim}
+for use at the next time step. Try  $\varepsilon=0.1$
+\item How does this filter affect the solution in comparison with raw CTCS and with FTBS?
+\item What happens when you change the filter coefficient?
+\end{enumerate}
+
+\clearpage
+\section{Semi-Lagrangian Advection}
+
+Semi-Lagrangian schemes discretise advection using the material derivative:
+\begin{equation}
+\frac{D\phi}{Dt} = 0
+\label{eqn:DDt}
+\end{equation}
+where the derivative is along the path of the fluid moving with velocity $\vec{u}$. The mathematical definition of  the material derivative is $\frac{D\phi}{Dt}=\frac{\partial\phi}{\partial t} + \vec{u}\dprod\nabla\phi$. The physical meaning is the rate of change of $\phi$ seen by an observer moving with the flow. The discretised form of \ref{eqn:DDt} is:
+\begin{equation}
+\frac{\phi^{(n+1)}_j - \phi^{(n)}_{jD}}{\delta t} = 0
+\end{equation}
+where $jD$ represents the departure location so the solution at time $n$ must be interpolated from the $x_j$ locations onto location $x_{jD}$. The time step is no-longer restricted by the Courant number but for stability, a sufficiently small time step must be used so that trajectories do not cross. 
+
+\begin{center}
+\includegraphics[scale=0.5]{figs/SL.pdf}
+\end{center}
+
+In 1d, for velocity $u$, the departure point in order to reach grid point $x_j$ after time step $\delta t$ is $x_{jD}=x_j-u\delta t$. It is therefore necessary to find grid point $k$ such that $x_k \le x_{jD} \le x_{k+1}$ and interpolate $\phi^{(n)}_k$ and $\phi^{(n)}_{k+1}$ onto $x_{jD}$. 
+
+If only $\phi^{(n)}_k$ and $\phi^{(n)}_{k+1}$ are used for the interpolation then linear interpolation is used:\\
+\begin{minipage}{0.49\linewidth}
+\begin{equation*}
+\phi^{(n)}_{jD} = ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~.
+\end{equation*}
+\end{minipage}
+\begin{minipage}{0.49\linewidth}
+\includegraphics[width=\linewidth]{figs/linearInterp.pdf}
+\end{minipage}\\
+where $\beta = (x_{jD} - x_{k})/\delta x$. 
+However the resulting advection scheme is only first-order accurate. For third-order accuracy, use cubic interpolation:
+\begin{align}
+\phi_{jD} = -& \frac{1}{6}\beta(1-\beta)(2-\beta)\phi_{k-1}
+             + \frac{1}{2}(1+\beta)(1-\beta)(2-\beta)\phi_k \\
+            +& \frac{1}{2}(1+\beta)\beta(2-\beta)\phi_{k+1}
+             - \frac{1}{6}(1+\beta)\beta(1-\beta)\phi_{k+2}
+\end{align}
+
+\subsection{Tasks}
+\begin{enumerate}
+\item \url{sl_linear.pro} advects the same initial profile with the same flow speed as was used in previous tasks using semi-Lagrangian advection with linear interpolation. Run \url{sl_linear.pro} with various time steps. What happens when the Courant number is greater than one? For a Courant number less than one, does linear semi-Lagrangian behave like an Eulerian scheme? Which one?
+\item Copy \url{sl_linear.pro} to \url{sl_cubic.pro} and change the interpolation scheme to cubic. How does this affect the solution for different time steps?
+\end{enumerate}
+
+
+
+\bibliography{../lit/numerics}
+\bibliographystyle{abbrvnat}
+
+\end{document}
+

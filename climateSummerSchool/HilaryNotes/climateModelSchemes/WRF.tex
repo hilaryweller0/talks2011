@@ -1,0 +1,41 @@
+\begin{slide}{WRF: Weather Research and Forecasting}
+
+\ \\
+\begin{list0}
+
+\item WRF is a mesoscale, local area model (LAM), NOT a global climate model\\
+$\therefore$ no poles in the grid, no polar filtering needed, less need for semi-Lagrangian
+
+\item Non-hydrostatic or hydrostatic
+
+\item Arakawa C-grid
+
+\item Lorenz vertical staggering
+
+\item Terrain following vertical coordinate hybrid with hydrostatic pressure
+
+\item Split explicit -- accousitc time step $\frac{1}{4}$ of advection time step
+
+\item Implicit in the vertical to avoid restriction based on vertically propagating sound waves
+
+%\item Divergence damping needed to control grid scale oscillations -- reduces accuracy
+
+\item One way and two way nests to achieve high resolution in part of a large domain
+\begin{list1}
+    \item Much easier with split-explicit model than with semi-implicit model
+\end{list1}
+
+\item VERY good parallelisability reported. But this is for LAM, not the global version.\\Good scaling due to:
+\begin{list1}
+    \item Split-explicit rather than semi-implicit
+    \item No pole problem to deal with which limits scalability
+    \item Eulerian rather than semi-Lagrangian
+    \item Finite difference rather than spectral
+\end{list1}
+
+\item One-way and two-way nesting $\rightarrow$ errors $\therefore$
+
+\end{list0}
+
+\end{slide}
+

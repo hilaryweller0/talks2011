@@ -1,0 +1,32 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Motivation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{itemize}
+
+\item The Current UM does not scale well in parallel due to fundamental design decisions in the dynamical core
+
+\item Exact Local Conservation of mass and all tracers
+
+This will be achieved in EndGame (conservative semi-Lagrangian using SLICE)
+
+\end{itemize}
+
+\heading{Why doesn't the current UM Scale?}
+
+\begin{itemize}
+\item Current dynamical core (New Dynamics) and next dynamical core (End Game) use:
+
+\begin{itemize}
+\item Lat-lon grid with polar filtering -- polar filters communicate across many processors
+\item Semi-Lagrangian -- near the poles, the departure point may be on a distant processor
+\item Semi-implicit time stepping -- requires global communication
+\end{itemize}
+
+\item EndGame on Yin-Yang grid is under development but ...
+
+\item What algorithms are needed for a more scalable dynamical core with similar accuracy?
+
+\end{itemize}
+
+\end{slide}

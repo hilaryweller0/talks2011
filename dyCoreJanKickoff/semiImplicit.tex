@@ -1,0 +1,39 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Semi-implicit versus Horizontally Explicit Time Stepping}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list0}
+
+\item Highest winds speeds in the atmosphere $\sim \frac{1}{4}$ speed of sound\\
+$\rightarrow$ use time stepping which is explicit in the vertical and implicit in the horizontal
+
+\item This will degrade accuracy while potentially improving parallelisation
+
+\item Compare parallel scaling and accuracy on up to 10K cores of HECToR
+
+\item Down to 15km horizontal resolution
+
+\item Limitations on results
+    \begin{list1}
+    \item implementation dependent
+    \item architecture dependent
+    \item only up to $\sim$10K cores
+    \item only down to 15km resolution
+    \item dependent on explicit time stepping scheme
+    \end{list1}
+
+\item So the results will not be conclusive -- just indicative
+
+\item Plans to test on more cores at higher resolution and different architectures should depend on these results
+
+\item Comparisons of accuracy and conservation should be more conclusive
+
+\item Results cannot be extrapolated to 100K processors
+    \begin{list1}
+    \item weak scaling should continue
+    \item other problems like fault tolerance become an issue
+    \end{list1}
+
+\end{list0}
+
+\end{slide}

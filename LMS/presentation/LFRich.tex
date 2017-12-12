@@ -1,0 +1,152 @@
+\begin{slide}{}
+
+\begin{minipage}{0.38\linewidth}
+\includegraphics[width=\linewidth]{../Ed/rich_factory/RichardsonPhoto.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.58\linewidth}
+{\large\bf Lewis Fry Richardson} (1881-1953)
+dreamed of solving these equations with a human forecasting factory:
+
+\includegraphics[width=\linewidth]{../Ed/rich_factory/RichardsonFactory.png}
+
+\end{minipage}
+
+\end{slide}
+
+\begin{slide}{}
+
+\begin{minipage}[t]{0.65\linewidth}
+    \includegraphics[height=\textheight]{../Ed/HW_forecastFactory/UK_labels.png}
+\end{minipage}
+\begin{minipage}[t]{0.35\linewidth}
+    \includegraphics[width=\linewidth]{../Ed/HW_forecastFactory/Tinit.pdf}\\
+    $\delta t = 1\text{hour} = 3600\text{s}$
+\end{minipage}
+\end{slide}
+
+\begin{slide}{}
+
+\everymath{\displaystyle}
+\definecolor{grey}{rgb}{0.6,0.6,0.6}
+\newcommand{\gbox}[1]{~\boxed{\color{grey} #1}~}
+\newcommand{\timeStep}
+{
+$
+\gbox{~~~T_\text{old}~~}
+-\frac{\gbox{~~~\delta t~~~}}{2\tims\gbox{~~~d~~~}}
+\biggl(\gbox{~~\text{u}~~} ~\bigl( \gbox{~~~T_\text{west}~~}
+                          - \gbox{~~~T_\text{east}~~} \bigr)
++      \gbox{~~\text{v}~~} ~\bigl( \gbox{~~~T_\text{north}~~}
+                          - \gbox{~~~T_\text{south}~~} \bigr)
+\biggr)
+= \gbox{~~~T_\text{new}~~}$
+}
+
+\newcommand{\workSheet}[6]
+{
+\begin{center}
+{\normalsize\bf #1}
+
+\small
+\begin{minipage}[t]{0.5\linewidth}
+\begin{tabular}[t]{llccl}
+\bf Initial conditions    & temperature  & $T$ & $=$    & $#2^oC$\\ \\
+\bf Fixed inputs & wind in $x$ direction & u   & $=$    & $#3$ m/s\\
+             & wind in $y$ direction & v   & $=$    & $#4$ m/s\\
+             & time step             & $\delta t$ & $=$ & $3600$ s \\
+             & space step            & $d$        & $=$ & $100,000$ m
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.48\linewidth}
+\begin{tabular}[t]{ll}
+\bf Boundary Conditions & #5 \\ \\
+\bf Surroundings        & #6
+\end{tabular}
+\end{minipage}
+\begin{enumerate}
+\item \timeStep
+\item \timeStep
+\item \timeStep
+\item \timeStep
+\end{enumerate}
+
+\begin{tabular}{|c|c|c|c|}
+\hline Dumfries & Carlisle & Newcastle & Dogger \\
+\hline Irish Sea & Manchester & Grimsby & Humber \\
+\hline Snowdon & Birmingham & Peterborough & Norwich \\
+\hline Swansea & Bristol & London & Southend \\ \hline
+\end{tabular}
+\end{center}
+}
+
+\parskip 0pt
+\workSheet{London}{23}{6}{2}{$T_\text{south} = 25^oC$}
+          {$T_\text{north} = $ Peterborough \\& $T_\text{east} = $ Southend \\&
+          $T_\text{west} = $ Bristol}
+
+\end{slide}
+
+\begin{slide}{Sunshine!}
+
+\begin{list0}
+\item The sun has come out in the south. 
+    \begin{list1}
+    \item Add 2\de C to the temperature in Swansea, Bristol and Southend
+    \item Add 5\de C to the temperature in London due to the urban heat island
+    \end{list1}
+\end{list0}
+
+\vskip 2ex
+\heading{Mountains!}
+
+\begin{list0}
+\item The air is rising over the mountains. 
+    \begin{list1}
+    \item Subtract 4\de C from the temperature in Snowdon
+    \end{list1}
+\end{list0}
+
+\end{slide}
+
+\begin{slide}{Clear skies at night!}
+
+\begin{list0}
+\item The sun has set and clear skies lead to radiative cooling to space
+    \begin{list1}
+    \item Subtract 5\de C from the temperature in Peterborough and Norwich
+    \end{list1}
+\end{list0}
+
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/Tinit.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T1.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T2.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T3.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T4.pdf}
+}
+\end{slide}
+

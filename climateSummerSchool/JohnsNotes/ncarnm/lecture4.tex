@@ -1,0 +1,895 @@
+
+%
+%	NCAR summer colloquium on Numerical Methods
+%       for Global Atmospheric Models
+% 
+%       Vertical discretizations
+%
+%	John Thuburn
+%	18 May 2008
+%
+%
+%\documentclass[a4,landscape]{slides}
+%\documentclass[a4,scdouble]{seminar}
+
+\documentclass[a4]{seminar}
+\input seminar.bug
+
+\usepackage{amsmath,amssymb}
+\usepackage[dvips]{graphics,color,graphicx}
+%\usepackage{psfrag}
+%\usepackage{epsfig}
+%\usepackage{psfig}
+%\usepackage{pstcol}
+\usepackage{semlcmss,semcolor}
+\usepackage{fancyhdr}
+
+\renewcommand{\labelitemi}{*}
+
+\newcommand{\re}{\mbox{Re}}
+\newcommand{\im}{\mbox{Im}}
+\newcommand{\ii}{\mathrm{i}}
+
+\newcommand{\R}[1]{\textcolor{red}{#1}}
+\newcommand{\B}[1]{\textcolor{blue}{#1}}
+
+%% Bold symbol macro for standard LaTeX users
+% \newcommand{\boldsymbol}[1]{\mbox{\boldmath $#1$}}
+
+\definecolor{gray}{rgb}{0.8,0.95,0.95}
+\definecolor{lightgray}{rgb}{0.85,0.97,0.97}
+%\definecolor{verylightgray}{rgb}{0.89,0.985,0.985}
+%\definecolor{verylightgray}{rgb}{0.905,0.985,0.985}
+\definecolor{verylightgray}{rgb}{0.985,0.985,0.985}
+
+
+\pagecolor{verylightgray}
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0.2mm}
+\renewcommand{\footrulewidth}{0.2mm}
+\fancyhead[L]{\tiny  Vertical discretizations
+\newline John Thuburn }
+%\fancyhead[R]{\mbox{\psfig{file=uelogo.eps,width=15mm}}}
+\fancyhead[R]{\makebox{\resizebox{15mm}{!}{\includegraphics{exeterlogo.eps}}}}
+%\fancyhead[R]{\tiny University of Exeter}
+\fancyfoot[R]{\tiny Page \theslide}
+\fancyfoot[C]{}
+
+\setlength{\slidewidth}{250mm}
+\setlength{\leftmargin}{30mm}
+
+\renewcommand{\slideleftmargin}{30mm}
+\renewcommand{\slidetopmargin}{25mm}
+\renewcommand{\headwidth}{\textwidth}
+
+
+\begin{document}
+
+\slideframe{none}
+
+\pagestyle{fancy}
+
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+
+{\Large \bf
+\B{Vertical discretizations}
+}
+
+\end{center}
+
+\vspace{6mm}
+
+\begin{center}
+{\small Thursday 5 June, 2008}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Outline}
+
+\vspace{4mm}
+
+\(\bullet\) Different vertical coordinates
+
+\vspace{4mm}
+
+\(\bullet\) Bottom and top boundary conditions
+
+\vspace{4mm}
+
+\(\bullet\) Example: the energy and angular momentum conserving scheme
+of Simmons and Burridge
+
+\vspace{4mm}
+
+\(\bullet\) Wave dispersion and balance
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Different vertical coordinates}
+
+\vspace{3mm}
+
+\begin{minipage}{52mm}
+\makebox{\resizebox{50mm}{!}{{\includegraphics{coord.eps}}}}
+\end{minipage}
+\begin{minipage}{60mm}
+
+Transformation rules:
+
+\begin{displaymath}
+\frac{\partial \psi}{\partial z} =
+\frac{\partial \eta}{\partial z}\frac{\partial \psi}{\partial \eta}
+\end{displaymath}
+\begin{displaymath}
+\left(\frac{\partial \psi}{\partial s}\right)_z =
+\left(\frac{\partial \psi}{\partial s}\right)_\eta +
+\left(\frac{\partial \psi}{\partial \eta} \right)
+\left(\frac{\partial \eta}{\partial s}\right)_z
+\end{displaymath}
+\begin{displaymath}
+\frac{D \psi}{D t} =
+\frac{\partial \psi}{\partial t} +
+\mathbf{v} . \nabla_{\mathrm{H}} +
+\dot{\eta} \frac{\partial \psi}{\partial \eta}
+\end{displaymath}
+
+\end{minipage}
+
+\vspace{3mm}
+
+Note it is usual to retain the usual velocity components
+\begin{center}
+\( u = \dot{\lambda} a \cos \phi \), \ \ \( v = \dot{\phi} a \),
+\ \ \( w = \dot{z}\) ( as well as \( \dot{\eta} \) )
+\end{center}
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Examples}
+
+\vspace{6mm}
+
+(i) \R{\bf Height} \( \eta = z \)
+
+\vspace{3mm}
+
+(ii) \R{\bf Pressure} \( \eta = p \)
+
+\vspace{3mm}
+
+(iii) \R{\bf Mass} \( \eta = \int_z^\infty g \rho dz \)
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Examples}
+
+\vspace{2mm}
+
+\begin{minipage}{50mm}
+(iv) \R{\bf Terrain following} variants
+
+E.g.\ \( \eta = z - z_s\),
+
+or \( \eta = p/p_s \)
+\end{minipage}
+\ \ \ \ \ \ \ \ \ 
+\begin{minipage}{50mm}
+Also (v) \R{\bf hybrid terrain following} variants
+
+E.g.\ \( \eta = a + b \)
+
+where \( p = a p_0 + b p_s \) 
+\end{minipage}
+
+\begin{center}
+\makebox{\resizebox{120mm}{!}{{\includegraphics{tfc.eps}}}}
+\end{center}
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Examples}
+
+\vspace{6mm}
+
+(vi) \R{\bf Isentropic coordinate} \( \eta = f(\theta) \)
+
+\vspace{3mm}
+
+(vii) \R{\bf Lagrangian vertical coordinate} \( \dot{\eta} = 0 \)
+
+\vspace{3mm}
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Bottom boundary condition}
+
+\vspace{2mm}
+
+\begin{minipage}{55mm}
+\R{\bf No normal flow}
+\end{minipage}
+\begin{minipage}{55mm}
+\begin{center}
+\makebox{\resizebox{53mm}{!}{{\includegraphics{bbc.eps}}}}
+\end{center}
+\end{minipage}
+
+\vspace{2mm}
+
+\( \dot{\eta} = 0 \) if \( \eta \) is terrain following
+
+\vspace{2mm}
+
+\( w = 0 \) if the ground is flat. Otherwise \( w = \mathbf{v} . \nabla_{H} z_s \)
+
+\vspace{2mm}
+
+When a boundary layer is included (\R{\bf no slip}) then
+\( \mathbf{v} = \mathbf{0} \), \( w = 0 \)
+
+But for a frictionless dynamical core (\R{\bf free slip})
+we need a value of \( \mathbf{v}_s \).
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+An alternative is to use a \R{\bf terrain intersecting coordinate}
+
+\begin{center}
+\makebox{\resizebox{75mm}{!}{{\includegraphics{etabc.eps}}}}
+\end{center}
+
+possibly using \R{\bf fractional cells} or \R{\bf shaved cells}
+
+\vspace{2mm}
+
+Tricky when the coordinate surfaces and their intersections with
+the ground may move.
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Top boundary condition}
+
+\vspace{2mm}
+
+The real atmosphere has no top boundary!
+
+\vspace{3mm}
+
+Practical choices include
+
+\vspace{2mm}
+
+\( \bullet \) \R{\bf rigid lid} at some constant \( z \). \( w = 0 \) there.
+Angular momentum and energy conservation are preserved.
+
+\vspace{3mm}
+
+\( \bullet \) \R{\bf elastic lid} at some constant \( p \) (may be \( p = 0 \) ).
+\( \dot{p} = 0 \) there. Continuous equations conserve
+angular momentum and enthalpy.
+
+
+\vspace{5mm}
+
+It is common to include some (non-scale-selective) damping near the model
+top to reduce \R{\bf spurious wave reflection}.
+
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Example: the Simmons and Burridge
+energy and angular momentum conserving scheme}
+
+for the hydrostatic primitive equations
+
+\vspace{3mm}
+
+Hybrid ``sigma-pressure'' coordinate \( p = a p_0 + b p_s \)
+
+\begin{center}
+\makebox{\resizebox{55mm}{!}{{\includegraphics{simmons.eps}}}}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Hydrostatic equation}
+
+\begin{displaymath}
+\frac{\partial \Phi}{\partial \eta} =
+- \frac{R T}{p} \frac{\partial p}{\partial \eta}
+\end{displaymath}
+
+naturally becomes
+
+\begin{displaymath}
+\Phi_{k+1/2} - \Phi_{k-1/2}
+=
+- R T_k \ln \frac{p_{k+1/2}}{p_{k-1/2}}
+\end{displaymath}
+
+and then
+
+\begin{displaymath}
+\Phi_k = \Phi_{k+1/2} +
+\alpha_k R T_k
+\end{displaymath}
+
+\vspace{2mm}
+
+Note the existence of a \R{\bf `computational mode'}: a non-zero pattern
+in \( T \) that is invisible to the \( \Phi_k \).
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Angular momentum conservation}
+
+\begin{displaymath}
+\frac{D \mathbf{v}}{Dt} + f \hat{\mathbf{z}} \times \mathbf{v}
++ \nabla \Phi +
+\frac{R T}{p} \nabla p = 0
+\end{displaymath}
+
+Take \( \int_0^1 (\dots) \, \partial p / \partial \eta \, d \eta \)
+
+For angular momentum conservation we require
+\begin{displaymath}
+\sum_{r=1}^N \Phi_r \frac{\partial}{\partial \lambda} \Delta p_r
+=
+\Phi_s \frac{\partial p_s}{\partial \lambda}
++
+\sum_{r=1}^N R
+\left( \frac{T}{p} \frac{\partial p}{\partial \lambda} \right)_r
+\Delta p_r
+\end{displaymath}
+
+which is satisfied if
+
+\begin{displaymath}
+\left( \frac{R T}{p} \nabla p \right)_k
+=
+\frac{r T_k}{\Delta p_k}
+\left[ \left( \ln \frac{p_{k+1/2}}{p_{k-1/2}} \right) \nabla p_{k-1/2}
++ \alpha_k \nabla(\Delta p_k)
+\right]
+\end{displaymath}
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\B{\bf Energy conservation}
+
+\vspace{2mm}
+
+\( \mathbf{v} \) times momentum equation:
+
+\begin{displaymath}
+\frac{D}{Dt} \left( \frac{\mathbf{v}^2}{2} \right)
++
+\mathbf{v} . \nabla \Phi
++
+\frac{R T}{p} \mathbf{v} . \nabla{p}
+= 0
+\end{displaymath}
+
+Thermodynamic equation
+\begin{displaymath}
+\frac{D}{Dt} c_p T
+-
+\frac{R T \omega}{p}
+= 0
+\end{displaymath}
+
+where
+\begin{displaymath}
+\omega \equiv \dot{p} =
+-\int_0^\eta \nabla .
+\left( \mathbf{v} \frac{\partial p}{\partial \eta} \right)
+\, d \eta
++
+\mathbf{v} . \nabla p
+\end{displaymath}
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+We require
+
+\begin{displaymath}
+\int \left( \mathbf{v}.\nabla \Phi + \frac{R T}{p} \mathbf{v}.\nabla p
+- \frac{RT \omega}{p} \right) \frac{\partial p}{\partial \eta}
+\, d \eta \, dA = 0
+\end{displaymath}
+
+This will be satisfied provided we evaluate
+\begin{displaymath}
+\left( \frac{1}{p} \nabla p \right)_k
+\end{displaymath}
+
+as in the momentum equation, and \( RT/p\) times the
+vertical integral term as
+
+\begin{displaymath}
+\frac{R T_k}{\Delta p_k}
+\left[
+\left( \ln \frac{p_{k+1/2}}{p_{k-1/2}} \right)
+\sum_{r=1}^{k-1} \nabla . (\mathbf{v}_r \Delta p_r )
++
+\alpha_k \nabla.(\mathbf{v}_k \Delta p_k)
+\right]
+\end{displaymath}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Wave propagation, and balance}
+
+\vspace{4mm}
+
+There are issues analogous to those that arise when choosing
+horizontal discretizations:
+
+Which choices of prognostic variables
+and grid staggering best capture \R{\bf wave propagation},
+\R{\bf adjustment}, and \R{\bf balance}?
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf The Lorenz and Charney-Phillips grids}
+
+for the hydrostatic case
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{lcp.eps}}}}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf The Lorenz grid computational mode}
+
+\vspace{2mm}
+
+Consider the Simmons and Burridge scheme
+
+Linearize about a state of hydrostatic balance, and
+compare neighboring \( \Phi \) values
+
+\begin{displaymath}
+\Phi'_{k} - \Phi'_{k-1}
+=
+( \alpha_k - ( \Delta \ln p)_k) T'_k - \alpha_{k-1} T'_{k-1}
+\end{displaymath}
+
+\vspace{2mm}
+
+The left hand side can vanish provided a certain average of the
+\( T' \)s vanishes
+
+\vspace{2mm}
+
+There is some oscillatory pattern in \( T_k \) that is invisible
+to the \( \Phi_k \), and therefore does not propagate.
+
+This also implies a spurious resonant response to steady forcing.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Compressible Euler equations}
+
+\vspace{3mm}
+
+We now need \R{\bf five} prognostic variables, so there are many
+choices of staggering.
+
+Also, there is some freedom over which
+thermodynamic variables to use (any two from
+\( \rho \), \( p \), \( T \), \( \theta \), etc...)
+
+\vspace{4mm}
+
+Here consider \R{\bf \( z \) coordinate}. Similar reasoning applies to
+other vertical coordinates (e.g.\ mass, isentropic).
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+We want to minimize the use of vertical averaging and of
+finite differences over \( 2 \Delta z \)
+
+\vspace{3mm}
+
+Numerical exploration of a large number of cases shows
+
+\vspace{4mm}
+
+\( \bullet \) accurate representation of acoustic waves is necessary
+(but not sufficient) for an accurate representation of inertio-gravity
+waves
+
+\vspace{4mm}
+
+\( \bullet \) which in turn is necessary (but not sufficient) for
+an accurate representation of Rossby waves.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Acoustic waves}
+
+\begin{displaymath}
+\omega^2 \approx m^2 c^2
+\end{displaymath}
+
+
+\vspace{3mm}
+
+To capture acoustic waves (reasonably) accurately in the limit
+of short vertical wavelength we require
+
+\vspace{2mm}
+
+\( \bullet \) \( \delta_z p \) at the same level as \( w \)
+
+\vspace{2mm}
+
+\( \bullet \) \( \delta_z w \) at the same level as \( p \)
+
+\vspace{4mm}
+
+What if we don't predict \( p \) ?
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Inertio-gravity waves}
+
+\begin{displaymath}
+\omega^2 \approx \frac{ m^2 f^2 + K^2 N^2 }{m^2 + K^2}
+\end{displaymath}
+
+
+\vspace{3mm}
+
+To capture inertio-gravity waves (reasonably) accurately in the limit
+of short vertical wavelength we require
+
+\vspace{2mm}
+
+\( \bullet \) \( u \) and \( v \) at the same level as \( p \)
+
+\vspace{2mm}
+
+\( \bullet \) buoyancy variable at the same level as \( w \)
+
+
+\vspace{4mm}
+
+What if we don't predict \( p \) ?
+
+
+
+\end{slide}
+
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Rossby waves}
+
+\begin{displaymath}
+\omega \approx - \frac{k \beta N^2}{m^2 f^2 + K^2 N^2}
+\end{displaymath}
+
+
+\vspace{3mm}
+
+To capture Rossby waves (reasonably) accurately in the limit
+of short vertical wavelength we require
+
+\vspace{2mm}
+
+\( \bullet \) buoyancy variable at the same level as \( w \)
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Example: optimal configuration}
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{optimal.eps}}}}
+\end{center}
+
+with pressure gradient term written as \( c_p \theta \nabla \Pi \) 
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{optimal_disp.ps}}}}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Example: Lorenz-like grid}
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{lorenz.eps}}}}
+\end{center}
+
+Note computational mode.
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{lorenz_disp.ps}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Example: sub-optimal configuration}
+
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{optimal2.eps}}}}
+\end{center}
+
+with pressure gradient term written as \( (1 / \rho ) \nabla p \)
+and \( p \) diagnosed from \( \rho \) and \( \theta \)
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{suboptimal2_disp.ps}}}}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Example: optimal configuration predicting \( \rho \)}
+
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{optimal2.eps}}}}
+\end{center}
+
+with pressure gradient term written as \( c_p \theta \nabla \Pi \)
+and \( \Pi \) diagnosed from \( \rho \) and \( \theta \)
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\makebox{\resizebox{95mm}{!}{{\includegraphics{optimal2_disp.ps}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Note the \R{\bf apparent incompatibility} between
+\B{\bf optimal wave propagation without computational modes}
+
+\vspace{3mm}
+
+and
+
+\vspace{3mm}
+
+\B{\bf energy conservation}
+
+\vspace{5mm}
+
+But see Friday's lecture on ``conservation''...
+
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf The \( \rho \)-\( \theta \)-\( q \) conundrum}
+
+\vspace{3mm}
+
+\( \bullet \) Optimal wave propagation requires \( \rho \) staggered
+with respect to \( \theta \)
+
+\vspace{2mm}
+
+\( \bullet \) Conservation of moisture requires \( \rho \) collocated
+with \( q \)
+
+\vspace{2mm}
+
+\( \bullet \) Physical parameterizations require \( q \) collocated
+with \( \theta \)
+
+
+
+\end{slide}
+
+% ----------------------------------------------------------------------------
+
+\begin{slide}
+
+
+
+\end{slide}
+
+% ----------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\end{slide}
+
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+
+
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

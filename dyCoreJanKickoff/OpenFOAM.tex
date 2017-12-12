@@ -1,0 +1,38 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Why use OpenFOAM}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list0}
+
+\item Open source, GPL
+
+\item Portable -- was ported to HECToR without help from the developers (OpenCFD Limited)
+
+\item Uses any MPI
+
+\item Includes parallel implementations of a variety of linear equations solvers
+
+\end{list0}
+
+{\centering\bf\Large
+AtmosFOAM
+}
+
+\begin{list0}
+
+\item Currently shallow water model on the sphere written using OpenFOAM \\
+-- $\sim$100 lines of code
+
+\item Can solve equations on any grid of the sphere
+
+\item Semi-implicit and explicit implementations
+
+\item Co-located and Thuburn C-grid implementations
+
+\item More OpenFOAM functionality will be used to extend AtmosFOAM to be a 3D non-hydrostatic model which runs in parallel
+
+\item {\color{purple}\it But} AtmosFOAM does not exploit efficiency gains from using a structured grid
+
+\end{list0}
+
+\end{slide}

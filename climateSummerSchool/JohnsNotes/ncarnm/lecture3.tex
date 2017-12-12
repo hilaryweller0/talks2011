@@ -1,0 +1,700 @@
+
+%
+%	NCAR summer colloquium on Numerical Methods
+%       for Global Atmospheric Models
+% 
+%       Horizontal discretizations
+%
+%	John Thuburn
+%	8 May 2008
+%
+%
+%\documentclass[a4,landscape]{slides}
+%\documentclass[a4,scdouble]{seminar}
+
+\documentclass[a4]{seminar}
+\input seminar.bug
+
+\usepackage{amsmath,amssymb}
+\usepackage[dvips]{graphics,color,graphicx}
+%\usepackage{psfrag}
+%\usepackage{epsfig}
+%\usepackage{psfig}
+%\usepackage{pstcol}
+\usepackage{semlcmss,semcolor}
+\usepackage{fancyhdr}
+
+\renewcommand{\labelitemi}{*}
+
+\newcommand{\re}{\mbox{Re}}
+\newcommand{\im}{\mbox{Im}}
+\newcommand{\ii}{\mathrm{i}}
+
+\newcommand{\R}[1]{\textcolor{red}{#1}}
+\newcommand{\B}[1]{\textcolor{blue}{#1}}
+
+%% Bold symbol macro for standard LaTeX users
+% \newcommand{\boldsymbol}[1]{\mbox{\boldmath $#1$}}
+
+\definecolor{gray}{rgb}{0.8,0.95,0.95}
+\definecolor{lightgray}{rgb}{0.85,0.97,0.97}
+%\definecolor{verylightgray}{rgb}{0.89,0.985,0.985}
+%\definecolor{verylightgray}{rgb}{0.905,0.985,0.985}
+\definecolor{verylightgray}{rgb}{0.985,0.985,0.985}
+
+
+\pagecolor{verylightgray}
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0.2mm}
+\renewcommand{\footrulewidth}{0.2mm}
+\fancyhead[L]{\tiny  Horizontal discretizations
+\newline John Thuburn }
+%\fancyhead[R]{\mbox{\psfig{file=uelogo.eps,width=15mm}}}
+\fancyhead[R]{\makebox{\resizebox{15mm}{!}{\includegraphics{exeterlogo.eps}}}}
+%\fancyhead[R]{\tiny University of Exeter}
+\fancyfoot[R]{\tiny Page \theslide}
+\fancyfoot[C]{}
+
+\setlength{\slidewidth}{250mm}
+\setlength{\leftmargin}{30mm}
+
+\renewcommand{\slideleftmargin}{30mm}
+\renewcommand{\slidetopmargin}{25mm}
+\renewcommand{\headwidth}{\textwidth}
+
+
+\begin{document}
+
+\slideframe{none}
+
+\pagestyle{fancy}
+
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+
+{\Large \bf
+\B{Horizontal discretizations}
+}
+
+\end{center}
+
+\vspace{6mm}
+
+\begin{center}
+{\small Wednesday 4 June, 2008}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Outline}
+
+\vspace{4mm}
+
+\(\bullet\) Wave propagation and staggered grids
+
+\ \ \ \ 1D gravity waves
+
+\ \ \ \ 2D inertio-gravity waves
+
+\ \ \ \ 2D Rossby waves
+
+\vspace{4mm}
+
+\(\bullet\) Conservation properties
+
+
+\vspace{6mm}
+(I will not discuss the spectral method, nor advection schemes)
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Wave propagation and staggered grids}
+
+\vspace{3mm}
+
+Motivation: accurate representation of propagation of \R{\bf fast waves} and
+hence \R{\bf adjustment} and \R{\bf balance}.
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf 1D gravity waves}
+
+\vspace{6mm}
+
+Linearized, 1D, non-rotating, shallow water equations
+
+\begin{displaymath}
+\frac{\partial \Phi}{\partial t} + \Phi_0 \frac{\partial u}{\partial x} = 0
+\ \ \ \ \ 
+\frac{\partial u}{\partial t} + \frac{\partial \Phi}{\partial x} = 0
+\end{displaymath}
+
+\vspace{2mm}
+
+Look for wavelike solutions
+\begin{displaymath}
+\Phi = Re \left\{ \hat{\Phi} \exp[\ii(kx - \omega t)]\right\}
+\ \ \ \ \ 
+u = Re \left\{ \hat{u} \exp[\ii(kx - \omega t)]\right\}
+\end{displaymath}
+
+to find the dispersion relation
+\begin{displaymath}
+\omega^2 = k^2 \Phi_0
+\end{displaymath}
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf On an unstaggered grid}
+
+\vspace{2mm}
+
+\begin{displaymath}
+\frac{\partial u_j}{\partial t} + \frac{\Phi_{j+1} - \Phi_{j-1}}{2 \Delta x} = 0
+\ \ \ \ \ \ 
+\frac{\partial \Phi_j}{\partial t} + \frac{u_{j+1} - u_{j-1}}{2 \Delta x} = 0
+\end{displaymath}
+
+\vspace{3mm}
+\hspace{20mm} \( k \rightarrow \sin (k \Delta x) / \Delta x \)
+\vspace{3mm}
+
+\begin{center}
+\makebox{\resizebox{85mm}{!}{{\includegraphics{unstag2.epsi}}}}
+\end{center}
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf On a staggered grid}
+
+\vspace{2mm}
+
+\begin{displaymath}
+\frac{\partial u_{j+1/2}}{\partial t} + \frac{\Phi_{j+1} - \Phi_{j}}{\Delta x} = 0
+\ \ \ \ \ \ 
+\frac{\partial \Phi_j}{\partial t} + \frac{u_{j+1/2} - u_{j-1/2}}{\Delta x} = 0
+\end{displaymath}
+
+\vspace{3mm}
+\hspace{20mm} \( k \rightarrow \sin (k \Delta x / 2) / ( \Delta x / 2) \)
+\vspace{3mm}
+
+\begin{center}
+\makebox{\resizebox{85mm}{!}{{\includegraphics{stag2.epsi}}}}
+\end{center}
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\B{\bf Matlab demo of unstaggered and staggered grids}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Computational modes}
+
+Spuriously fail to propagate
+
+\vspace{4mm}
+
+\B{\bf Parasitic modes}
+
+Spurious propagation, e.g.\ wrong sign of group velocity
+
+Implications for inhomogeneous and adaptive grids
+
+\begin{center}
+\B{\bf Matlab demo of parasitic mode}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf 2D inertio-gravity waves}
+
+Linearized, 2D, rotating, shallow water equations
+
+\begin{eqnarray}
+\frac{\partial \Phi}{\partial t} +
+\Phi_0 \left( \frac{\partial u}{\partial x} + \frac{\partial v}{\partial y} \right)
+& = & 0 \nonumber \\
+\frac{\partial u}{\partial t} - fv + \frac{\partial \Phi}{\partial x}
+& = & 0 \nonumber \\
+\frac{\partial v}{\partial t} + fu + \frac{\partial \Phi}{\partial y}
+& = & 0 \nonumber
+\end{eqnarray}
+
+\vspace{3mm}
+
+Dispersion relation (for \( f = f_0 = \mathrm{const}\))
+\begin{displaymath}
+\omega \left( \omega^2 - f_0^2 - (k^2 + l^2)\Phi_0 \right) = 0
+\end{displaymath}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf The Rossby radius}
+
+Define
+
+\begin{displaymath}
+\lambda = \Phi_0^{1/2} / f_0
+\end{displaymath}
+
+\vspace{2mm}
+On scales smaller than \( \lambda \) pressure gradient terms dominate.
+
+\vspace{2mm}
+On scales greater than \( \lambda \) Coriolis terms dominate.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf A-grid}
+
+\begin{minipage}{47mm}
+\makebox{\resizebox{45mm}{!}{{\includegraphics{gridA.eps}}}}
+\end{minipage}
+\begin{minipage}{60mm}
+\( k \rightarrow \sin (k \Delta x) / \Delta x \)
+
+\( l \rightarrow \sin (l \Delta y) / \Delta y \)
+
+\( f_0 \rightarrow f_0 \)
+\end{minipage}
+
+\begin{center}
+\makebox{\resizebox{80mm}{!}{{\includegraphics{dispgridA.eps}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf B-grid}
+
+\begin{minipage}{47mm}
+\makebox{\resizebox{45mm}{!}{{\includegraphics{gridB.eps}}}}
+\end{minipage}
+\begin{minipage}{60mm}
+\( k \rightarrow \cos(l \Delta y / 2) \sin (k \Delta x / 2) / ( \Delta x / 2 )\)
+
+\( l \rightarrow \cos(k \Delta x / 2) \sin (l \Delta y / 2) / ( \Delta y / 2 )\)
+
+\( f_0 \rightarrow f_0 \)
+\end{minipage}
+
+
+\begin{center}
+\makebox{\resizebox{80mm}{!}{{\includegraphics{dispgridB.eps}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf C-grid}
+
+\begin{minipage}{47mm}
+\makebox{\resizebox{45mm}{!}{{\includegraphics{gridC.eps}}}}
+\end{minipage}
+\begin{minipage}{60mm}
+\( k \rightarrow \sin (k \Delta x / 2) / ( \Delta x / 2 )\)
+
+\( l \rightarrow \sin (l \Delta y / 2) / ( \Delta y / 2 )\)
+
+\( f_0 \rightarrow f_0 \cos(k \Delta x / 2) \cos(l \Delta y / 2)\)
+\end{minipage}
+
+
+\begin{center}
+\makebox{\resizebox{80mm}{!}{{\includegraphics{dispgridC.eps}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{minipage}{44mm}
+\B{\bf D-grid}
+
+\makebox{\resizebox{42mm}{!}{{\includegraphics{gridD.eps}}}}
+\end{minipage}
+\begin{minipage}{44mm}
+\B{\bf E-grid}
+
+\makebox{\resizebox{42mm}{!}{{\includegraphics{gridE.eps}}}}
+\end{minipage}
+
+\vspace{2mm}
+
+\begin{minipage}{44mm}
+\B{\bf Z-grid}
+
+\makebox{\resizebox{42mm}{!}{{\includegraphics{gridZ.eps}}}}
+\end{minipage}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\begin{center}
+\B{\bf Matlab demo of geostrophic adjustment}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+There exist analogues of these staggered grids for other grid cell shapes
+such as triangles and hexagons - see the lecture by Todd Ringler.
+
+\vspace{4mm}
+
+Also, analogous ideas hold for finite-element discretizations.
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Rossby wave propagation on the C-grid}
+
+\vspace{2mm}
+
+Does averaging of Coriolis terms lead to poor representation of
+Rossby wave propagation?
+
+\begin{minipage}{47mm}
+\makebox{\resizebox{45mm}{!}{{\includegraphics{gridC.eps}}}}
+\end{minipage}
+\begin{minipage}{50mm}
+When \( f \) is a function of position there are various ways of
+averaging the Coriolis terms
+\end{minipage}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\R{\( f \)-at-\(\Phi\)-points} is quite good:
+
+\begin{displaymath}
+\partial_t u - \overline{f \overline{v}^y}^x + \delta_x \Phi = 0
+\end{displaymath}
+\begin{displaymath}
+\partial_t v + \overline{f \overline{u}^x}^y + \delta_y \Phi = 0
+\end{displaymath}
+
+It captures the wave frequency quite well even for short north-south wavelengths
+(but not short east-west wavelengths).
+
+\vspace{2mm}
+
+It is also energy conserving.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\makebox{\resizebox{80mm}{!}{{\includegraphics{f_at_u2.epsi}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+
+\begin{slide}
+
+\B{\bf In spherical geometry} it is important to include appropriate
+geometrical factors in the averaging of the Coriolis terms, for consistency
+with the mass continuity equation:
+
+\begin{displaymath}
+\frac{\partial u}{\partial t}
+-
+\overline{\frac{f}{\cos \phi} \overline{v \cos \phi}^\phi}^\lambda
++
+\frac{1}{a \cos \phi} \delta_\lambda \Phi
+=0
+\end{displaymath}
+
+\begin{displaymath}
+\frac{\partial v}{\partial t}
++
+\overline{f \overline{u}^\lambda}^\phi
++
+\frac{1}{a } \delta_\phi \Phi
+=0
+\end{displaymath}
+
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+\begin{center}
+\makebox{\resizebox{50mm}{!}{{\includegraphics{f_at_u_sphere2.epsi}}}}
+\makebox{\resizebox{50mm}{!}{{\includegraphics{f_at_u_sphere_spurious2.epsi}}}}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Energy conservation - Coriolis terms}
+
+\vspace{2mm}
+
+Coriolis terms should cancel when we take \( u \) times
+\begin{displaymath}
+\frac{D u}{D t} - f v = \ldots
+\end{displaymath}
+plus \( v \) times
+\begin{displaymath}
+\frac{D v}{D t} + f u = \ldots
+\end{displaymath}
+
+\vspace{2mm}
+
+Straightforward for A-grid and B-grid
+
+
+
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+For the C-grid, write \( u^{\mathrm{*}} = u \Phi a \Delta \phi \),
+\( v^{\mathrm{*}} = v \Phi a \cos \phi \Delta \lambda \)
+
+\begin{displaymath}
+\begin{array}{l}
+\frac{\partial }{\partial t}( u a \cos \phi \Delta \lambda )_{i,j+1/2} \\
+- \alpha_{i,j+1/2} \, v^{\mathrm{*}}_{i+1/2,j+1}
+-  \beta_{i,j+1/2} \, v^{\mathrm{*}}_{i-1/2,j+1} \\
+- \gamma_{i,j+1/2} \, v^{\mathrm{*}}_{i-1/2,j}
+- \delta_{i,j+1/2} \, v^{\mathrm{*}}_{i+1/2,j} = \ldots
+\end{array}
+\end{displaymath}
+
+\begin{displaymath}
+\begin{array}{l}
+\frac{\partial }{\partial t}( v a \Delta \phi )_{i+1/2,j} \\
++ \alpha_{i,j-1/2} \, u^{\mathrm{*}}_{i,j-1/2}
++ \beta_{i+1,j-1/2} \, u^{\mathrm{*}}_{i+1,j-1/2} \\
++ \gamma_{i+1,j+1/2} \, u^{\mathrm{*}}_{i+1,j+1/2}
++ \delta_{i,j+1/2} \, u^{\mathrm{*}}_{i,j+1/2} = \ldots
+\end{array}
+\end{displaymath}
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Energy conservation - pressure gradient terms}
+
+\vspace{2mm}
+
+We require a discrete analogue of
+\begin{displaymath}
+\mathbf{v} . \nabla p + p \nabla . \mathbf{v} = \nabla . (\mathbf{v} p)
+\end{displaymath}
+or, at least,
+\begin{displaymath}
+\int \mathbf{v} . \nabla p \, dA + \int p \nabla . \mathbf{v} \, dA = 0
+\end{displaymath}
+
+\vspace{2mm}
+
+Relatively straightforward on the A-grid.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+E.g.\ on a C-grid write
+\( \hat{u} = u a \Delta \phi = u^{\mathrm{*}} / \rho \),
+\( \hat{v} = v  a \cos \phi \Delta \lambda = v^{\mathrm{*}} / \rho \)
+
+Then
+\begin{displaymath}
+\begin{array}{l}
+\Sigma_{i \, j} \, \hat{u}_{i,j+1/2} \,
+\left( p_{i+1/2,j+1/2} - p_{i-1/2,j+1/2} \right) + \\
+\Sigma_{i \, j} \, \hat{v}_{i+1/2,j} \,
+\left( p_{i+1/2,j+1/2} - p_{i+1/2,j-1/2} \right) + \\
+\Sigma_{i \, j} \, p_{i+1/2,j+1/2} \,
+\left( \hat{u}_{i+1,j+1/2} - \hat{u}_{i,j+1/2} \right) + \\
+\Sigma_{i \, j} \, p_{i+1/2,j+1/2} \,
+\left( \hat{v}_{i+1/2,j+1} - \hat{v}_{i+1/2,j} \right) = 0 \\
+\end{array}
+\end{displaymath}
+
+(with care at the poles)
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Similar considerations apply to \B{\bf angular momentum conservation}.
+
+\vspace{6mm}
+
+\B{\bf conservation of potential enstrophy} is also possible, at least
+in the shallow water case, but is more complicated.
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\end{slide}
+
+% ----------------------------------------------------------------------------
+
+\begin{slide}
+
+
+
+\end{slide}
+
+% ----------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\end{slide}
+
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+
+
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

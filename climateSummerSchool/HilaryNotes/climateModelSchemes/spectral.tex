@@ -1,0 +1,68 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{The Spectral Method}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+\begin{list0}
+
+\item As high order accuracy as is possible on any particular grid\\
+$\rightarrow$ best accuracy for the computational effort FOR SMOOTH solutions\\
+$\rightarrow$ particularly accurate for low resolution
+
+\item Not conservative
+
+\item Requires a periodic domain $\therefore$ not ideal for limited area models
+
+\item Suffers from spectral ringing
+\begin{list1}
+    \item oscillations either side of discontinuities due to representation of all fields as sums of waves
+\end{list1}
+\item Parallelisability limited due to global communications of decomposing solution into waves.\\
+ECMWF can scale to $\sim$10,000 processors
+\end{list0}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{The Spectral Method}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+Express the state, $\phi$, of the atmosphere as a sum of $N$ waves of different waves lengths. 1D Example:
+
+\[
+\phi(x,t) = \sum_{k=0}^{N} a_k \sin kx + i~b_k \cos kx = \sum_{k=0}^N A_k e^{ikx}
+\]
+
+where $x\in[0, 2\pi]$ and $a_k$, $b_k$ or complex valued $A_k$ are the Fourier coefficients.
+
+Fourier coefficients found using an fft -- fast Fourier transform
+
+$N$ is the spectral resolution or spectral truncation
+
+Remember use for Fourier filtering:\\
+\begin{minipage}{0.32\linewidth}
+\includegraphics[width=\linewidth]{Fourier/realSpace.png}
+\end{minipage}
+%
+\begin{minipage}{0.32\linewidth}
+\includegraphics[width=\linewidth]{Fourier/firstModes.png}
+\end{minipage}
+%
+\begin{minipage}{0.32\linewidth}
+\includegraphics[width=\linewidth]{Fourier/lastModes.png}
+\end{minipage}
+
+\begin{minipage}[t]{0.38\linewidth}\centering
+Black line -- original data $\rightarrow$
+\end{minipage}
+%
+\begin{minipage}[t]{0.23\linewidth}\centering
+First few modes
+\end{minipage}
+%
+\begin{minipage}[t]{0.37\linewidth}\centering
+Highest frequency modes
+\end{minipage}
+\end{slide}
+

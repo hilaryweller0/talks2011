@@ -1,0 +1,48 @@
+\begin{slide}{Approximate Solution using Finite Differences}
+
+\begin{list0}
+
+\item Continuous heat equation for temperature:
+
+$\frac{d T}{d t}
+= -\text{u} \frac{dT}{dx} - \text{v} \frac{dT}{dy} - \text{w} \frac{dT}{dz}
++ \frac{1}{\rho c_p} \text{(heat sources and sinks)}
+-\frac{\rho \text{w}}{c_p} g $
+\end{list0}
+
+\vspace{-24pt}
+\begin{minipage}{0.59\linewidth}\raggedright
+\begin{list0}
+\item Continuous derivatives are approximated by differences:
+
+$\frac{dT}{d t} \approx
+\frac{T^\text{new} - T^\text{old}}{\delta t}$
+
+\ \\
+$\frac{dT}{dx} \approx \frac{T_\text{west} - T_\text{east}}{2d}$
+
+\ \\
+$\frac{dT}{dy} \approx \frac{T_\text{north} - T_\text{south}}{2d}$
+
+\ \\
+$\frac{dT}{dz} \approx \frac{T_\text{up} - T_\text{down}}{2d}$
+
+
+
+\end{list0}
+\end{minipage}
+\begin{minipage}{0.39\linewidth}
+\includegraphics[width=\linewidth]{graphics/grid.pdf}
+\end{minipage}
+
+So we can calculate the temperature at the new time step:
+
+$
+T^\text{new} = T^\text{old} - \delta t
+\biggl(
+    \text{u}\frac{T_\text{west} - T_\text{east}}{2d}
+  + \text{v}\frac{T_\text{north} - T_\text{south}}{2d}
+  + \text{w}\frac{T_\text{up} - T_\text{down}}{2d}
+\biggr) + \ldots
+$
+\end{slide}

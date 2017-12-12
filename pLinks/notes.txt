@@ -1,0 +1,45 @@
+Parliamentary Links Day
+
+Designing a New Weather and Climate Forecasting Model
+
+Gung-Ho: A UK project to design and build the dynamical core of a new weather and climate forecasting model. 
+
+Collaborative between:
+UK Met Office
+Various Natural Environment Research Council funded academics
+Science and Technology Facilities Centre
+
+This project is envied worldwide:
+We are scoping and designing the model properly before writing it
+Expertise in universities collaborating with Met Office
+Creative research council funding 
+
+What is a "dynamical core"?
+It is the heart of a weather or climate model that predicts the winds, pressure and temperature. Additional routines predict clouds, solar radiation, pollutant concentrations and their impact on the climate
+background - 3d grid (Palais)
+
+Why do we need a new dynamical core?
+The UK models are already (probably) the best in the world?
+But we need larger computers to make accurate regional predictions of climate change
+But they only run efficiently on old-fashioned, power hungry computers
+largest super-computers ~10MW, Boeing 747 140MW
+The next generation of super-computers use less powerful processors which use much less energy.
+We therefore need to link around a million less powerful processors together.
+Divide the atmosphere and ocean into small regions for each of the processors.
+However the weather in one location is linked with the weather elsewhere.
+Therefore lots of communication between processors.
+The current Met Office model needs too much communication
+Therefore it can only run efficiently on up to 1000 processors. Not a million
+How can we design a model that needs less communication?
+
+Lat-lon grid
+Other grids
+Other international centres already use other grids
+They are having problems
+We are going to learn from their difficulties and design another world beating model but this time one that does not use a lat-lon grid
+
+Conclusions
+UK Met Office brilliant
+Flexible research council funding is enabling this innovative project
+The UK will stay at the top in weather and climate forecasting
+

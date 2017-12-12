@@ -1,0 +1,297 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Atmospheric component of HadCM3 (HadAM3)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list0}
+
+\item Equations solved
+\begin{list1}
+\item Hydrostatic Euler equations
+\item Shallow Atmosphere approximation
+\item 3D Coriolis
+\end{list1}
+
+\item Spatial Discretisation
+\begin{list1}
+\item Eulerian advection
+\item Finite Difference ($2^{nd}$ order with $4^{th}$ order advection)
+\item Lat-lon B-grid
+\item Lorenz vertical grid
+\item $\eta$ vertical coordinate -- terrain following $\sigma$ near surface, pressure away from surface
+\item Fourier filtering towards the poles
+\item $\nabla^2$ or $\nabla^4$ diffusion
+\end{list1}
+
+\item Temporal Discretisation
+\begin{list1}
+\item Split explicit
+\item Two stage forward-backward Heun scheme
+\end{list1}
+
+\item Exact Conservation of:
+\begin{list1}
+\item Mass, momentum, angular momentum, total water
+\end{list1}
+\item Energy not conserved due to filtering and diffusion
+
+\end{list0}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadCM3 and HadAM3 Publications}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+\begin{list0}
+\item \bibentry{CD91}
+\item HadCM2 paper: \bibentry{JCC+97}
+\item \bibentry{GCS+00}
+\item \bibentry{PGR+00}
+\end{list0}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadAM3 -- Reasons for choices of equations solved}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\ \\
+\begin{list1}
+\item Hydrostatic Euler equations
+
+\begin{list2}
+    \item Hydrostatic relationship $\frac{\partial p}{\partial z} = -\rho g$ very accurate because vertical length scales are much shorter than horizontal
+    \item Hydrostatic approximation eliminates vertically propagating sound waves so much larger explicit time steps are stable
+\end{list2}
+
+\item Shallow Atmosphere approximation
+\begin{list2}
+    \item The atmosphere is very shallow relative to the radius of the Earth
+    \item This approximation can be made without violating conservation principles
+    \item Neglecting or fixing terms reduces number of computations
+\end{list2}
+
+\item 3D Coriolis
+\begin{list2}
+    \item Met Office worked out how to include these non-zero terms without violating conservation of angular momentum or energy within the hydrostatic, shallow atmosphere approximations
+\end{list2}
+
+\end{list1}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadCM3 -- Reasons for Spatial Discretisation Choices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list1}
+
+\item Finite Difference
+\begin{list2}
+    \item Conservative on structured grid (equivalent to higher order finite volume)
+    \item Simple, cheap and accurate (but not as accurate as spectral methods)
+    \item Grid point models better suited to local area modelling (LAMs) than spectral models
+\end{list2}
+
+\item $2^{nd}$ order with $4^{th}$ order advection
+\begin{list2}
+    \item Even orders for symmetry and energy conservation
+    \item $4^{th}$ order for accuracy and smoother advection
+    \item $2^{nd}$ order for efficiency
+\end{list2}
+
+\item Eulerian
+\begin{list2}
+    \item Conservation
+    \item Simplicity
+    \item Time step restrictions in polar regions can be circumvented with filtering
+\end{list2}
+
+\item Lat-lon grid
+\begin{list2}
+    \item Only two grid discontinuities so high accuracy maintained everywhere else
+    \item Very efficient algorithms -- You know exactly where you are and who your neighbours are from your $i, j, k$ indices.
+    \item Highly vectorisable
+\end{list2}
+
+\end{list1}
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Arakawa A, B and C-grids}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+For solving Euler equations\\
+$\frac{\partial u}{\partial t} + \vec{u}\dprod\nabla{u}
+= fv - \frac{1}{\rho}\frac{\partial p}{\partial x}$\\
+$\frac{\partial v}{\partial t} + \vec{u}\dprod\nabla{v}
+= -fu - \frac{1}{\rho}\frac{\partial p}{\partial y}$\\
+
+\begin{tabular}{ccc}
+A & B & C \\ \vspace{12pt} \\
+\href{run:../2dSWE/A.gif}
+{\includegraphics[width=0.33\linewidth]{figs/A.pdf}}
+&
+\href{run:../2dSWE/B.gif}
+{\includegraphics[width=0.33\linewidth]{figs/B.pdf}}
+&
+\href{run:../2dSWE/C.gif}
+{\includegraphics[width=0.33\linewidth]{figs/C.pdf}}
+\end{tabular}
+\vspace{4in}
+\end{slide}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list1}
+\item Vertical staggering -- discretise hydrostatic balance: $\frac{\partial p}{\partial z} = -\rho g$ (for a perfect gas, $p = \rho RT$)
+
+\begin{minipage}[t]{0.48\linewidth}\raggedright
+{\centering
+Lorenz \\
+\includegraphics[scale=1.5]{figs/L.pdf}
+}\\
+Thermodynamic variables ($p, T, \rho$) all co-located so more straightforward to obey equation of state and conservation of mass. But pressure gradient defined best in between temperature and density points so vertical pressure oscillations do not necessarily alter hydrostatic balance $\rightarrow$ grid scale oscilations
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\linewidth}\raggedright
+{\centering
+Charney--Phillips \\
+\includegraphics[scale=1.5]{figs/CP.pdf}
+}\\
+Pressure gradient defined best {\it at} temperature points so maintenance of hydrostatic balance removes grid scale oscillations
+\end{minipage}
+
+\item HadAM3 -- Lorenz grid
+
+\end{list1}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list1}
+\item $\eta$ vertical coordinate
+
+\begin{minipage}[t]{0.48\linewidth}\centering
+Sigma vertical coordinates \\ \hspace{1cm}-- terrain following \\
+\includegraphics[width=\linewidth]{figs/sigmaCoord.png}
+\begin{list2}
+\item $\sigma=\frac{p}{p_\text{surface}}$ \\
+\item Usually most accurate and straightforward to split the atmosphere into layers above mountains
+\item Dependence on surface pressure in upper layers contaminates calculation of horizontal pressure gradient
+\end{list2}
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.48\linewidth}\centering
+$\eta$ -- hybrid between sigma near the ground and pressure above\\
+\includegraphics[width=\linewidth]{figs/hybridCoord.png}
+\begin{list2}
+\item $\eta = 1$ at the surface, $0$ at the model top
+\item More accurate horizontal pressure gradients at upper levels
+\end{list2}
+
+\end{minipage}
+\end{list1}
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list1}
+\item Fourier filtering towards the poles
+\begin{list2}
+    \item Time step restrictions: $\delta t < \frac{\delta x}{u}$ and $\delta t < \frac{\delta x}{c}$ where $c$ is the speed of the fastest moving wave.
+    \item Too restrictive towards the poles as $\delta x$ becomes so small
+    \item Violating the time step restrictions leads to growing grid scale oscillations
+    \item $\therefore$ apply Fourier filtering on each latitude band separately
+    \begin{list0}
+        \item Decompose each array of latitude values into sums of waves of different wave lengths
+        \item Discard the waves with the shortest wave lengths
+        \item Map the solution back onto the grid
+    \end{list0}
+
+\begin{minipage}{0.32\linewidth}
+\includegraphics[width=\linewidth]{Fourier/realSpace.png}
+\end{minipage}
+%
+\begin{minipage}{0.32\linewidth}
+\includegraphics[width=\linewidth]{Fourier/firstModes.png}
+\end{minipage}
+%
+\begin{minipage}{0.32\linewidth}
+\includegraphics[width=\linewidth]{Fourier/lastModes.png}
+\end{minipage}
+
+\begin{minipage}[t]{0.38\linewidth}\centering
+Black line -- original data $\rightarrow$ \\
+Red line -- sum of first few modes
+\end{minipage}
+%
+\begin{minipage}[t]{0.23\linewidth}\centering
+First few modes
+\end{minipage}
+%
+\begin{minipage}[t]{0.37\linewidth}\centering
+Highest frequency modes \\
+$\longleftarrow$
+\end{minipage}
+\\ \ \\
+    \item This process removes energy and can limit parallelisability
+\end{list2}
+\end{list1}
+\end{slide}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list1}
+\item $\nabla^2$ or $\nabla^4$ diffusion
+\begin{list2}
+    \item Necessary to remove grid scale oscillations of the B-grid
+\end{list2}
+
+\end{list1}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{HadCM3 -- Reasons for Temporal Discretisation Choices}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{list1}
+
+\item Split Explicit
+\begin{list2}
+    \item Fastest gravity waves about 3 times faster than fastest flow
+    \item $\therefore$ take 3 (adjustment) time steps for propagating gravity waves within each full advection step.
+
+    \item Gravity waves are propagated during the short time steps. (Cheap part)
+    
+    \item Full advection and physics only calculated for long time steps. (Expensive part)
+\end{list2}
+\end{list1}
+
+\ \\Why?
+\begin{list0}
+\item Explicit $\therefore$ no need for expensive matrix solver
+\item Reasonable time steps since adjustment steps shorter and cheaper and filtering used near poles
+\item Highly parallelisable -- matrix solvers for semi-implicit methods do not always scale well
+\end{list0}
+
+\ \\But
+\begin{list0}
+\item imbalances can grow during the adjustment steps of an advection step
+\end{list0}
+
+
+\end{slide}

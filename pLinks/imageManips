@@ -1,0 +1,3 @@
+convert -modulate 120,20 550x-k-computer-fujitsu.jpg kComputer.png 
+
+

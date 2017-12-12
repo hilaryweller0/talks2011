@@ -1,0 +1,35 @@
+\begin{slide}
+\heading{Why do we need a new dynamical core?}
+
+\begin{minipage}{0.68\linewidth}
+
+\begin{list0}
+
+\item UK models are already (probably) best in the world
+\item But regional predictions of climate change are unreliable
+\item So climate models need higher resolution
+\item This needs faster computers
+\end{list0}
+\end{minipage}
+\begin{minipage}{0.3\linewidth}
+\includegraphics[width=1.4\linewidth]{graphics/kComputer.png}
+
+\vspace{-1in}
+\end{minipage}
+
+\begin{list0}
+\item Computers are no longer getting faster, just bigger\\
+    $\therefore$ more calculations per second
+    \begin{list1}
+    \item Biggest, k-computer in Japan, half a million processors
+    \end{list1}
+\item Divide the atmosphere and ocean into small regions for each of the processors
+\item However the weather in one location is linked with the weather elsewhere\\
+    $\therefore$ lots of communication between processors.
+\item The current Met Office model needs too much communication\\
+    $\therefore$ only cannot make good use of more than a few 1000 processors
+\item How can we design a model that needs less communication?
+\end{list0}
+
+\end{slide}
+

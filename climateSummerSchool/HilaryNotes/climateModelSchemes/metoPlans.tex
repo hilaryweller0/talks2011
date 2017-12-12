@@ -1,0 +1,57 @@
+\begin{slide}{Met Office Plans}
+
+\heading{SLICE}
+\begin{list0}
+\item SLICE --Semi-Lagrangian Inherently Conserving and Efficient.
+\item Conservative interpolating (mapping) onto departure volumes rather than departure points.
+\item Efficient CASCADE conservative interpolation relies on structured grid since each direction is done sequentially.
+\end{list0}
+
+\heading{Gung-ho project}
+
+\begin{list0}
+\item Joint with 10 academics and STFC
+\item Design and build a new, more scalable dynamical core
+\item Consider alternative grid structures
+\end{list0}
+
+\end{slide}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{\normalsize\bf What Horizontal Grid? Quasi-uniform for parallel scaling}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\vspace{12pt}
+
+\renewcommand{\figWidth}{0.3\linewidth}
+
+\begin{minipage}{0.08\linewidth}\centering
+\makebox[\linewidth][c]{
+\includegraphics[width=1.5in]{figs/Cgrid.pdf}}
+C-grid
+\end{minipage}
+%
+\begin{tabular}{ccc}
+
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+24x48_V2+constant+mesh.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+bucky4+constant+mesh.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+tri4+constant+mesh.pdf}
+\\
+skipped lat-lon & hexagonal-icosahedral & triangular icosahedral \\
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+kite4+constant+mesh.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+cube12_Voronoi+constant+meshBlack.pdf}
+&
+\includegraphics[width=\figWidth]{figs/yinYang.png}
+\\
+kites & cubed sphere & Yin-Yang
+\end{tabular}
+
+\end{slide}
+

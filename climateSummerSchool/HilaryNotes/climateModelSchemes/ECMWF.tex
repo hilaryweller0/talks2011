@@ -1,0 +1,25 @@
+\begin{slide}{ECMWF IFS -- Integrated Forecast System}
+
+\ \\
+\begin{list0}
+\item Highest resolution global forecast -- 16km
+\item SISL -- Semi-implicit semi-Lagrangian -- for efficiency
+\begin{list1}
+    \item Semi-implicit, spectral solution of Helmholz equation -- for accuracy. Not conservative.
+    \item Semi-Lagrangian advection -- for accurate, non-conservative advection with long time steps
+\end{list1}
+\item Hydrostatic -- historical choice
+\item Reduced grid towards the poles
+\begin{list1}
+    \item Removes need for filtering towards the poles
+    \item Can be accurate with high order accuracy or spectral differencing
+\end{list1}
+\item Global medium range weather and seasonal forecasts.
+\begin{list1}
+    \item No local area model so no issues with boundary conditions of spectral model
+    \item No climate forecasts so long term problems without conservation not a problem
+\end{list1}
+\item Changed from Lorenz vertical staggering to no vertical staggering with cubic spline interpolation
+\end{list0}
+\end{slide}
+

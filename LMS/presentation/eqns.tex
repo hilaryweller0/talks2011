@@ -1,0 +1,69 @@
+\begin{slide}{What is a Climate Model?}
+
+\begin{list0}
+\item Solve the fundamental equations of motion in the atmosphere and ocean
+
+%\item With a few assumptions, the wind changes following the Navier-Stokes equations:
+
+%\setlength{\tabcolsep}{1pt}
+%\begin{tabularx}{\linewidth}{CcCcCcCcCcC}
+%$\frac{\partial \vec{v}}{\partial t}$ &
+%$=$ &
+%$-\vec{v}\dprod\nabla\vec{v}$ &
+%$-$ &
+%$2\vec{\Omega} \times \vec{v}$ &
+%$-$ &
+%$\frac{\nabla p}{\rho}$ &
+%$+$ &
+%$\nu\nabla^2 \vec{v}$ &
+%$-$ &
+%$\vec{g}$ \\
+%Change  && Movement of  && Spin of && Pressure && Viscosity && Gravity\\
+%in wind && wind by wind && Earth   && gradient &&           &&        \\
+%\end{tabularx}
+
+\item
+\begin{minipage}{0.68\linewidth}
+The temperature, $T$, changes based on the heat equation\\(with some assumptions):
+\end{minipage}
+\begin{minipage}{0.3\linewidth} 
+\includegraphics[width=\linewidth]{graphics/vector.pdf}
+\end{minipage}
+
+\setlength{\tabcolsep}{2pt}
+\begin{tabular}{cccccccc}
+&&&&&
+\multirow{4}{*}{
+$\begin{pmatrix*}[l]
+\text{heat from solar ratiation}\\
+\text{heat from intra-red radiation}\\
+\text{latent heat of evaporation}\\
+-\text{latent heat of Condensation}\\
+-\text{radiative cooling to space}
+\end{pmatrix*}$ }
+\\
+$\frac{d T}{d t}$ &
+$=$ &
+$-\text{u} \frac{dT}{dx} - \text{v} \frac{dT}{dy} - \text{w} \frac{dT}{dz}$ &
+%$-\vec{v}\dprod\nabla T$ &
+$+$ &
+$\frac{1}{\rho c_p}$ & &
+$-$ &
+$\frac{\text{w} g}{c_p} $
+\\
+Change in   && Movement of          &&&&& work against\\
+temperature && temperature by wind  &&&&& gravity
+\end{tabular}
+\vskip 5ex
+
+\item Similar equations for wind, pressure, humidity, pollutants
+
+\item Very accurate representations of the real world
+
+\item But cannot be solved exactly
+
+\item Climate and weather forecasting models solve these equations approximately
+
+\end{list0}
+
+\end{slide}

@@ -1,0 +1,27 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Dynamical Core Requirements}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{itemize}
+
+\item Non-hydrostatic, deep atmosphere
+
+\item Exact local conservation of mass and all tracers
+
+\item Scalable to a million cores? GPUs?
+
+\item Fast turnaround times
+
+\item Accuracy close to current dynamical core
+
+\item Second order accuracy in space and time
+
+\item Free from spurious computational modes (eg checkerboard pattern in Arakawa A and B grids). Therefore must use staggered grid
+
+\item Quasi-uniform resolution. Therefore not lat-lon
+
+\item Twice as many velocity degrees of freedom (in horizontal) than pressure to avoid spurious Rossby or gravity modes. Therefore grid cells must be quadrilaterals?
+
+\end{itemize}
+
+\end{slide}

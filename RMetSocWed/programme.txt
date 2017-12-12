@@ -1,0 +1,16 @@
+Wed 19 Jan 2011, Imperial College London
+
+Next generation modelling techniques for the atmosphere and ocean
+
+2pm, Julia Slingo (Met Office), "Introduction"
+2:05, David Burridge (ex ECMWF), "A history of the numerical methods used for atmospheric prediction"
+2:40, Bill Skamarock (NCAR), "A Nonhydrostatic Atmospheric Model using Centroidal Voronoi Meshes"
+3:15, Matthew Piggott (Imperial), "3D unstructured mesh ocean modelling"
+3:30, Tea
+4pm, John Thuburn (Exeter), "Trouble near the grid scale"
+4:35, Colin Cotter (Imperial), "Geostrophically optimal finite elements"
+4:50, Joanna Szmelter (Loughborough), "Unstructured mesh modelling of atmospheric inertia-gravity waves"
+5:05, Hilary Weller, "Grids and numerical techniques for the global atmosphere"
+5:20, Panel Discussion, chaired by Julia Slingo
+6pm, Close
+

@@ -1,0 +1,7 @@
+Next generation modelling techniques for the atmosphere and ocean
+Wed 19 January 2011 Royal Met Soc Meeting
+Imperial College
+How many posters can we have?
+
+Numerical modelling of the atmosphere and ocean have reached a pinnacle; the dynamical cores of these models are accurate and run efficiently on the powerful, bespoke parallel machines for which they were designed. However it appears that future increases in computer power will come from more parallel, cheaper processors and the best improvements in accuracy for computer power may come from increased model resolution only where it is most needed. Both of these constraints may mean that the next generation of models may look quite different from the current, well optimised generation. Models on different meshes of the sphere may be necessary to circumvent the pole problem and to allow static local refinement or dynamic mesh adaptation. During this meeting we will hear a history of developments of numerical methods for the atmosphere, some new model developments at NCAR, US, some new model developments in the UK and an overview of some of the challenges we face in designing models with static or dynamic mesh adaptation.
+

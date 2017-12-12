@@ -1,0 +1,151 @@
+\documentclass[12pt]{article}
+
+% packages from ametsoc.sty
+\RequirePackage{graphicx}
+%\RequirePackage[dvips,letterpaper,textwidth=16.5cm,textheight=22.9cm]{geometry}
+\RequirePackage[dvips,a4paper,textwidth=16.5cm,textheight=24cm]{geometry}
+\RequirePackage{natbib}
+\RequirePackage{url}
+\RequirePackage{color}
+\RequirePackage{fancyhdr}
+\RequirePackage{amsmath,mathtools,amsfonts,amssymb,bm}
+%\RequirePackage{indentfirst}
+%\RequirePackage{ifthen}
+%\RequirePackage[nomarkers, tablesfirst, nolists]{endfloat}%
+%\renewcommand{\efloatseparator}{}%{\mbox{}}
+%             {\pagestyle{empty}\thispagestyle{empty}\clearpage}
+
+% my customization
+
+\pagestyle{myheadings}
+\markright{Hilary Weller\hfill Modelling Advection\hfill}
+
+\RequirePackage{times}
+\RequirePackage{setspace}
+\RequirePackage{tabularx}
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}%
+\newcolumntype{R}{>{\raggedleft\arraybackslash}X}%
+%\renewcommand{\tabularxcolumn}[1]{>{}m{#1}}
+%\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+%\newcolumntype{Z}{>{\centering\arraybackslash}X}
+\RequirePackage{multirow}
+%\RequirePackage[tight,FIGTOPCAP]{subfigure}
+\RequirePackage[tight]{subfigure}
+\setlength{\subfigcapskip}{-3pt}
+\setlength{\subfigbottomskip}{2pt}
+\setlength{\subfigtopskip}{2pt}
+\RequirePackage{rotating}
+
+% endfloat stuff
+%\renewcommand{\efloatseparator}{\mbox{}}
+%             {\pagestyle{empty}\thispagestyle{empty}\clearpage}
+% float customisation
+\renewcommand{\floatpagefraction}{0.75}
+\renewcommand{\textfraction}{0}
+\renewcommand{\topfraction}{1}
+\renewcommand{\bottomfraction}{1}
+
+% some shorthands
+\newcommand{\de}{\ensuremath{^\circ}}
+\newcommand{\ie}{\ensuremath{i.e.}}
+\newcommand{\eg}{\ensuremath{eg.}}
+\newcommand{\dof}{d.o.f.}
+\newcommand{\dofs}{d.o.f.s}
+\newcommand{\WM}{graphics/shallowWater+WilliMountain}
+\newcommand{\WS}{graphics/shallowWater+WilliSteady}
+\newcommand{\BA}{graphics/shallowWater+baroInstab}
+\newcommand{\RUN}{/home/hilary/OpenFOAM/hilary-dev/run}
+\newcommand{\baroJetDir}{\RUN/shallowWaterSphereMesh/baroJet}
+\newcommand{\mountainDir}{\RUN/shallowWaterSphereMesh/WilliMountain}
+\newcommand{\WilliSteadyOldDir}{/home/hilary/OpenFOAM/hilary2-dev/run/shallowWaterTRiSK/WilliSteady}
+
+\newcommand{\ST}{graphics/f90+stswm}
+\newcommand{\dprod} {\,{\scriptscriptstyle \stackrel{\bullet}{{}}}\,}
+\renewcommand{\vec}[1] {\ensuremath{\mathbf #1}}
+\newcommand{\gvec}[1] {\ensuremath{\mbox{\boldmath$\bf#1$}}}
+\newcommand{\eqn}[1]{\mbox{$#1$}}
+
+% make $\times$, $+$, $-$ and $=$ use less space
+\newcommand{\tims}{\negthinspace \times \negthinspace}
+\newcommand{\eq}{\negthinspace = \negthinspace}
+\newcommand{\plus}{\negthinspace + \negthinspace}
+\newcommand{\minus}{\negthinspace - \negthinspace}
+
+% referencing of equation numbers
+\newcommand{\eqnRef}[1]{equation (\ref{#1})}
+\newcommand{\EqnRef}[1]{Equation (\ref{#1})}
+
+% refer to subsections including the section
+\newcommand{\subsec}[2]{\ref{#1}\ref{#2}}
+\newcommand{\subsubsec}[3]{\ref{#1}\ref{#2}\ref{#3}}
+%\newcommand{\subsec}[2]{\ref{#2}}
+
+% correct way of changing the enumi so that you refer to it properly
+\renewcommand{\theenumi}{\roman{enumi}}
+\renewcommand{\labelenumi}{\theenumi.}
+
+%%% modifications to make article style more compact
+\makeatletter
+
+\def\@part[#1]#2
+{
+    \refstepcounter{part}
+    {
+        \parindent \z@ \raggedright \interlinepenalty \@M
+        \normalfont \Large\bfseries
+        \partname\nobreakspace\thepart : \nobreakspace #2 %\markboth{}{}\par
+    }
+    \nobreak \vskip 1.3ex \@afterheading
+}
+\renewcommand\section
+{
+    \@startsection {section}{1}{\z@}{1ex \@plus 2ex \@minus -.2ex}%
+   {1ex \@plus 0.1ex}{\large\bfseries\raggedright}
+}
+\renewcommand\subsection
+{
+    \@startsection {subsection}{1}{\z@}{0.5ex \@plus 1ex \@minus -.2ex}%
+   {0.1ex \@plus .1ex}{\normalfont\bfseries\raggedright}
+}
+\renewcommand\subsubsection
+{
+    \@startsection {subsubsection}{1}{\z@}{-0.5ex \@plus -1ex \@minus -.2ex}%
+   {0.1ex \@plus .1ex}{\normalfont\raggedright}
+}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {1.25ex \@plus1ex \@minus.2ex}%
+                                    {-0.4em}%
+                                    {\normalfont\normalsize\bfseries}}
+
+\def\@maketitle
+{
+  \begin{center}%
+  \let \footnote \thanks
+    {\Large \@title \par}%
+    \vskip 0.5em%
+    {\large
+      \lineskip 1em%
+      \begin{tabular}[t]{c}%
+        \@author
+      \end{tabular}\par}%
+    \vskip 0.5em%
+    {\large \@date}%
+  \end{center}%
+  \par
+  %\vskip 1.5em
+}
+
+\renewenvironment{itemize}
+   {\begin{list}{$\bullet$}{
+      \setlength{\itemsep}{0pt}
+      \setlength{\labelwidth}{1ex}
+      \setlength{\leftmargin}{2ex}
+      \setlength{\topsep}{0pt}
+     }
+   }
+   {\end{list}}
+
+\renewcommand{\descriptionlabel}[1]{\parbox{\leftmargin}{\raggedleft #1.~}}
+
+\makeatother
+

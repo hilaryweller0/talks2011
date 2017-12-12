@@ -1,0 +1,76 @@
+\input{preamble}
+
+\begin{center}
+\large\bf
+    ABSTRACTS \\
+    Next generation modelling techniques for the \\atmosphere and ocean \\
+    Wednesday 19 January 2011
+\end{center}
+
+\begin{minipage}{\linewidth}\raggedright
+{\bf Bill Skamarock} (NCAR) \\
+\textbf{\textit{Nonhydrostatic Atmospheric Model using Centroidal Voronoi Meshes}}
+\\
+US Dept. of Energy Los Alamos National Laboratory and NCAR are developing a variable resolution model for massively parallel (petascale) computers. A centroidal Voronoi tesselation (with C-grid staggering) allows smooth variation of the mesh density. We will show that this mitigates many of the problems that arise when using grid nesting or cell subdivision to achieve locally high resolution. An example simulating a squall line is shown below (ascent shaded).
+
+\includegraphics[scale=0.88]{../Skamarock/figure_rms1_no-caption.pdf}
+\includegraphics[scale=0.75]{../Skamarock/figure_rms2_no-caption.pdf}
+
+\end{minipage}
+
+%\begin{minipage}{\linewidth}
+{\bf Matthew Piggott} (Imperial)\\
+\textbf{\textit{3D unstructured mesh ocean modelling}}
+\\
+For more than a decade novel numerical methods have been developed at Imperial College London for geophysical fluid dynamics (GFD) problems, with a focus on oceanographic applications. The use of adaptive and unstructured mesh methods has been a prevailing research theme as they offer a number of promising efficiency and accuracy benefits. However, there are a number of significant challenges that need to be overcome for their use in GFD applications, over and above those encountered in classical CFD problems. In this talk recent successes in addressing these challenges, as well as outstanding issues, will be discussed.
+%\end{minipage}
+
+
+\begin{minipage}{0.64\linewidth}\raggedright
+{\bf John Thuburn} (Exeter) \\
+\textbf{\textit{Trouble near the grid scale}}
+
+In numerical weather and climate models, errors are dominated by near grid scales. Poor handling of the near grid scales can seriously damage model solutions on all scales. On traditional longitude-latitude grids, techniques have been developed to treat the near grid scales in a satisfactory way. But these techniques need to be revisited for the quasi-uniform grids that are being considered for Next Generation models. In this talk I will discuss several examples, including grid staggering, discretisation of the Coriolis term and unphysical small scale wave modes on non-quadrilateral grids (eg see figure). 
+\end{minipage}
+%
+\begin{minipage}{0.35\linewidth}
+\includegraphics[scale=0.5]{../ThuburnFig.pdf}
+\end{minipage}
+
+\begin{minipage}{\linewidth}\raggedright
+{\bf Colin Cotter} (Imperial) \\
+\textbf{\textit{Geostrophically optimal finite elements}}
+\\
+The Arawaka C-grid finite difference method on the latitude-longitude grid, as currently used in the UK Met Office Unified Model, is in almost all respects the best numerical method for numerical weather prediction. It does have one major drawback, which is that all of the lines of longitude converge at the North and South Poles, resulting in very thin cells. For various reasons this prevents models based on the latitude-longitude grid from performing well on the massively parallel supercomputers that will be used for weather forecasting over the coming years. I will explain how new ideas from finite element methods can be used to find extensions of the C-grid on grids that uniformly cover the sphere.
+\end{minipage}
+
+\begin{minipage}{\linewidth}\raggedright
+{\bf Joanna Szmelter} (Loughborough) \\
+\textbf{\textit{Unstructured mesh modelling of atmospheric inertia-gravity waves}}
+\\
+Canonical problems are addressed in simulation of the atmospheric inertia-gravity wave dynamics. Our calculations use global and limited area models employing flexible unstructured meshes facilitating smoothly-varying spatial resolution. Examination of the results against theoretical estimates and respective reference solutions, obtained with structured-grid codes, demonstrate that models based on flexible unstructured meshes can sustain the accuracy of structured-grid schemes.
+
+\begin{center}
+\includegraphics[scale=0.25]{../SzmelterFig.png}
+\end{center}
+\end{minipage}
+
+\begin{minipage}{\linewidth}\raggedright
+{\bf Hilary Weller} (NCAS, Reading) \\
+\textbf{\textit{Grids and numerical techniques for the global atmosphere}}
+
+Some advantages and disadvantages of different grid structures of the sphere and of different refinement strategies will be demonstrated using simple test cases (see figure below). A co-located scheme will be compared with a staggered scheme for unstructured meshes and high and low order accuracy models for structured grids will be compared.
+
+\ \\
+\includegraphics[width=0.24\linewidth]
+{../Weller/shallowWater+WilliSteady+24x48_refine+constant+mesh_30.pdf}
+\includegraphics[width=0.24\linewidth]
+{../Weller/shallowWater+WilliSteady+cube12_refine+constant+mesh_30.pdf}
+\includegraphics[width=0.24\linewidth]
+{../Weller/shallowWater+WilliSteady+bucky4_refine+constant+mesh_30.pdf}
+\includegraphics[width=0.24\linewidth]
+{../Weller/shallowWater+WilliSteady+tri4_refine+constant+mesh_30.pdf}
+\ \\
+\end{minipage}
+
+\end{document}

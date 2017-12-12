@@ -1,0 +1,49 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}
+\centering{\normalsize Shallow-water test case results: steady, geostrophically balanced flow after 5 days,\\
+Height error, $h_e$ (m) (balanced initial conditions)}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\figWidth}{0.3\linewidth}
+\raggedright
+
+\newcommand{\subfig}[4]{
+\begin{minipage}{\figWidth}\centering
+\includegraphics[width=0.9\linewidth]{#1}\\
+#2 \\ \small $|h_e|\lt #3$m%, $|\vec{u}_e| \lt #4$m/s
+\end{minipage}
+}
+
+\begin{minipage}{0.04\linewidth}
+\includegraphics[height=8\linewidth]{graphics/shallowWaterSphereMesh+WilliSteady+bucky5+legends+hDiff_v.png}
+\end{minipage}
+%
+\subfig{graphics/shallowWaterSphereMesh+WilliSteady+48x96_V_45+save+CN_dt1hr_midPointpv_balance+432000+hDiff.png}
+{45\de\ skipped, 10,898 \dofs}{12.1}{1.6}
+%
+\subfig{graphics/shallowWaterSphereMesh+WilliSteady+bucky5+save+CN_dt1hr_midPointpv_balance+432000+hDiff.png}
+{hexagonal, 10,242 \dofs}{0.7}{0.6}
+%
+\subfig{graphics/shallowWaterSphereMesh+WilliSteady+tri5+save+CN_dt1hr_midPointpv_balance+432000+hDiff.png}
+{triangular, 12,800 \dofs}{1.1}{0.2}
+\\
+\begin{minipage}{0.04\linewidth}
+\includegraphics[height=8\linewidth]{graphics/shallowWaterSphereMesh+WilliSteady+kite4+legends+hDiff50_hDiff_v.png}
+\end{minipage}
+%
+\subfig{graphics/shallowWaterSphereMesh+WilliSteady+kite4+save+CN_dt1hr_midPointpv_balance+432000+hDiff50.png}
+{kites, 11,520 \dofs}{32}{6.4}
+%
+%\vfill
+\begin{minipage}{0.19\linewidth}
+Yin-Yang $\rightarrow$ (Mohamed Zerroukat)\\
+{\small $|h_e|\lt 1.7$m} \\
+non-conservative version \\
+19,584 \dofs
+\end{minipage}
+\begin{minipage}{0.4\linewidth}
+\includegraphics[width=\linewidth]{/home/hilary/projects/gungHo/Mohamed/alfa=0_h_error.pdf}
+\end{minipage}
+
+\end{slide}
+

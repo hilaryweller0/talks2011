@@ -1,0 +1,33 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{Errors in geostrophically balanced flow on various grids after 10 days}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\figWidth}{0.33\linewidth}
+\setlength{\tabcolsep}{1pt}
+
+\begin{tabular}{ccc}
+642 polygons & 3840 kites & 864 Voronoi-ised quadrilaterals
+\\
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+bucky4+save+dt_400+864000+hDiff.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+kite4+save+dt_100+864000+hDiff.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWaterTRiSK+WilliSteady+cube12_Voronoi+save+dt_400+864000+hDiff.pdf}
+\\
+Largest velocity error 1.2m/s
+&
+Largest velocity error =12m/s
+&
+Largest velocity error 5.6m/s
+
+\end{tabular}
+
+\ \\
+
+{\bf BUT} this just measures how far the initial conditions are from the discretely balanced state. More work needed
+
+\end{slide}
+

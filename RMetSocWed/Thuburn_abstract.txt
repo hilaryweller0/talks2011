@@ -1,0 +1,41 @@
+Trouble near the grid scale
+===========================
+
+
+John Thuburn
+
+
+The atmosphere is strongly multiscale in both space and time, and
+power spectra of wind and temperature fluctuations have rather shallow slopes.
+Consequently, in numerical weather and climate models there is
+significant information at marginally resolved scales and the
+errors, at least in the short term, are dominated by near grid scales.
+Through nonlinear feedbacks, for example via physical paramterizations,
+poor handling of the near grid scales can cause disproportionately large
+damage to the numerical solution.
+
+On orthogonal quadrilateral grids like the longitude-latitude grid,
+techniques have been developed to control the behaviour near the grid scale.
+However, these techniques need to be revisited for the quasi-uniform
+grids that are being considered for Next Generation models. In this talk
+I will discuss several examples, including the following:
+
+* On unstaggered grids, near grid scale fast waves are artificially slowed,
+leading to poor adjustment towards balance. The situation is much improved
+by suitable grid staggering.
+
+* However, care is required on staggered grids because the Coriolis terms require
+averaging. If this averaging is not done correctly, grid scale slow Rossby
+waves have a spurious fast propagation, and the scheme cannot maintain
+geostrophic balance. A method for constructing the correct averaging has recently
+been developed.
+
+* On a non-quadrilateral staggered grid the numbers of degrees of freedom in the
+mass, vorticity and divergence fields do not match; the scheme then supports
+one or more families of unphysical small scale wave modes. It is currently not
+clear how damaging these extra modes might be for the numerical solution.
+
+Shorter version by HW
+
+In numerical weather and climate models, errors are dominated by near grid scales. Poor handling of the near grid scales can seriously damage model solutions on all scales. The near grid scales have been handled well in traditional forecasting models which use uniform longitude-latitude grids but these techniques need to be revisited for the quasi-uniform grids that are being considered for Next Generation models. In this talk I will discuss several examples, including grid staggering, discretisation of the Coriolis term and unphysical small scale wave modes on non-quadrilateral grids. 
+

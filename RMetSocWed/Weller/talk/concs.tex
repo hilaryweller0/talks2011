@@ -1,0 +1,30 @@
+\begin{slide}{Conclusions}
+\large
+\begin{list0}
+
+\item Voronoi grids best
+    \begin{list1}
+    \item Best accuracy for cost
+    \item Allows gradual refinement
+    \end{list1}
+
+\item Local refinement can degrade accuracy. This is despite:
+    \begin{list1}
+    \item Global second order accuracy (quadratic differencing)
+    \item Staggering of pressure and velocity (Thuburn, Ringler, Skamarock et al)
+    \item Gradual refinement
+    \item Static refinement
+    \item Since balanced flow is transported into a region where it is no longer balanced
+    \item Fine scale waves can become trapped in fine resolution region
+    \item Upwinded interpolation needed to remove grid scale waves
+    \end{list1}
+
+\item Thuburn, Ringler, Skamarock and Klemp staggering for arbitrary meshes beneficial over co-located algorithms
+    \begin{list1}
+    \item Conservation of energy
+    \item Much cheaper
+    \end{list1}
+
+\end{list0}
+
+\end{slide}

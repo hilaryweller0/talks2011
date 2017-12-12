@@ -1,0 +1,129 @@
+\documentclass[a4paper,12pt,landscape]{article}
+
+\textwidth 26cm
+\oddsidemargin -0.5in
+\textheight 15cm 
+\topmargin -0.5in
+\parindent=0.0in
+
+%\pagestyle{empty}
+
+\usepackage{color,amssymb, mathtools,array}
+\everymath{\displaystyle}
+%\renewcommand{\baselinestretch}{2}
+\newcommand{\tims}{\negthinspace \times \negthinspace}
+
+\definecolor{grey}{rgb}{0.6,0.6,0.6}
+
+\newcommand{\gbox}[1]{~\boxed{\color{grey} #1}~}
+\newcommand{\timeStep}
+{
+$
+\gbox{~~~T_\text{old}~~}
+-\frac{\gbox{~~~\Delta t~~~}}{2\tims\gbox{~~~d~~~}}
+\biggl(\gbox{~~\text{u}~~} ~\bigl( \gbox{~~~T_\text{west}~~}
+                          - \gbox{~~~T_\text{east}~~} \bigr)
++      \gbox{~~\text{v}~~} ~\bigl( \gbox{~~~T_\text{north}~~}
+                          - \gbox{~~~T_\text{south}~~} \bigr)
+\biggr)
+= \gbox{~~~T_\text{new}~~}$
+}
+
+\newcommand{\workSheet}[6]
+{
+\clearpage
+\begin{center}
+{\huge\bf #1}
+
+\large
+\begin{minipage}[t]{0.5\linewidth}
+\begin{tabular}[t]{llccl}
+\bf Initial conditions    & temperature  & $T$ & $=$    & $#2^oC$\\ \\
+\bf Fixed inputs & wind in $x$ direction & u   & $=$    & $#3$ m/s\\
+             & wind in $y$ direction & v   & $=$    & $#4$ m/s\\
+             & time step             & $\Delta t$ & $=$ & $3600$ s \\
+             & space step            & $d$        & $=$ & $100,000$ m
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.48\linewidth}
+\begin{tabular}[t]{ll}
+\bf Boundary Conditions & #5 \\ \\
+\bf Surroundings        & #6
+\end{tabular}
+\end{minipage}
+\begin{enumerate}\raggedleft
+\item \timeStep
+\item \timeStep \\
+$\pm\gbox{~~~~T_\text{extra}~~~~}= \gbox{~~~T_\text{new}~~}$
+\item \timeStep
+\end{enumerate}
+
+\vspace{24pt}
+\begin{minipage}{0.2\linewidth}\raggedright
+All initial conditions:
+\end{minipage}
+\begin{tabular}{c|cc|cc|cc|cc|c}
+&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15} \\
+\hline 17 & Dumfries & 17 & Carlisle  & 17 & Newcastle & 17 & Dogger & 17&17\\
+\hline 19 & Irish Sea & 19 & Manchester & 19 & Grimsby & 19 & Humber & 19&19\\
+\hline 21 & Snowdon & 21 & Birmingham & 21 & Peterborough & 21 & Norwich & 21&21\\
+\hline 23 & Swansea & 23 & Bristol & 23 & London & 23 & Southend & 23&23\\ \hline
+&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}
+\end{tabular}
+\end{center}
+
+}
+
+\begin{document}
+
+\workSheet{Dumfries}{17}{-6}{-6}{$T_\text{north} = 15^oC$ \\& $T_\text{west} = 17^oC$}
+          {$T_\text{east} = $ Carlisle \\& $T_\text{south}$ = Irish Sea}
+\workSheet{Carlisle}{17}{-6}{-2}{$T_\text{north} = 15^oC$}
+          {$T_\text{west} = $ Dumfries \\& $T_\text{east} = $ Newcastle\\ &
+          $T_\text{south} = $ Manchester}
+\workSheet{Newcastle}{17}{-6}{2}{$T_\text{north} = 15^oC$}
+          {$T_\text{west} = $ Carlisle \\& $T_\text{east} = $ Dogger\\ &
+          $T_\text{south} = $ Grimsby}
+\workSheet{Dogger}{17}{-6}{6}{$T_\text{north} = 15^oC$ \\& $T_\text{east} = 17^oC$}
+          {$T_\text{west} = $ Newcastle \\&
+          $T_\text{south} = $ Humber}
+
+\workSheet{Irish Sea}{19}{-2}{-6}{$T_\text{west} = 19^oC$}
+          {$T_\text{north} = $ Dumfries \\& $T_\text{east} = $ Manchester \\&
+          $T_\text{south} = $ Snowdon}
+\workSheet{Manchester}{19}{-2}{-2}{}
+          {$T_\text{north} = $ Carlisle \\& $T_\text{west} = $ Irish Sea \\&
+          $T_\text{south} = $ Birmingham \\& $T_\text{east} = $ Grimsby}
+\workSheet{Grimsby}{19}{-2}{2}{}
+          {$T_\text{north} = $ Newcastle \\& $T_\text{east} = $ Humber \\&
+          $T_\text{south} = $ Peterborough \\& $T_\text{west} = $ Manchester}
+\workSheet{Humber}{19}{-2}{6}{$T_\text{east} = 19^oC$}
+          {$T_\text{north} = $ Dogger \\&
+          $T_\text{south} = $ Norwich \\& $T_\text{west} = $ Grimsby}
+
+\workSheet{Snowdon}{21}{2}{-6}{$T_\text{west} = 21^oC$}
+          {$T_\text{north} = $ Irish Sea \\& $T_\text{east} = $ Birmingham \\&
+          $T_\text{south} = $ Swansea}
+\workSheet{Birmingham}{21}{2}{-2}{}
+          {$T_\text{north} = $ Manchester \\& $T_\text{east} = $ Peterborough \\&
+          $T_\text{south} = $ Bristol \\& $T_\text{west} = $ Snowdon}
+\workSheet{Peterborough}{21}{2}{2}{}
+          {$T_\text{north} = $ Grimsby \\& $T_\text{east} = $ Norwich \\&
+          $T_\text{south} = $ London \\& $T_\text{west} = $ Birmingham}
+\workSheet{Norwich}{21}{2}{6}{$T_\text{east} = 21^oC$}
+          {$T_\text{north} = $ Humber \\&
+          $T_\text{south} = $ Southend \\& $T_\text{west} = $ Peterborough}
+
+\workSheet{Swansea}{23}{6}{-6}{$T_\text{west} = 23^oC$ \\& $T_\text{south} = 25^oC$}
+          {$T_\text{north} = $ Snowdon \\& $T_\text{east} = $ Bristol}
+\workSheet{Bristol}{23}{6}{-2}{$T_\text{south} = 25^oC$}
+          {$T_\text{north} = $ Birmingham \\& $T_\text{east} = $ London \\&
+          $T_\text{west} = $ Swansea}
+\workSheet{London}{23}{6}{2}{$T_\text{south} = 25^oC$}
+          {$T_\text{north} = $ Peterborough \\& $T_\text{east} = $ Southend \\&
+          $T_\text{west} = $ Bristol}
+\workSheet{Southend}{23}{6}{6}{$T_\text{east} = 23^oC$ \\& $T_\text{south} = 25^oC$}
+          {$T_\text{north} = $ Norwich \\&
+          $T_\text{west} = $ London}
+
+\end{document}

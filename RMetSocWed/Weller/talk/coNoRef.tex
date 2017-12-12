@@ -1,0 +1,63 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{What Grid to Avoid the Pole Problem?}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\figWidth}{0.49\linewidth}
+
+Height errors (m) after {\color{purple}\bf 4 days} of steady geostrophically balanced flow at 45\de\ to the equator %(Williamson et al 1992 test case 2)
+
+\begin{tabular}{cc}
+Reduced lat-lon (866 cells) & Cubed Sphere (864 cells)
+\\
+\includegraphics[width=\figWidth]
+{graphics/shallowWater+WilliSteady+24x48+save+alpha_45_cubUpCFCNew+345600+hDiff40.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWater+WilliSteady+cube12+save+alpha_45_cubUpCFCNew+345600+hDiff40.pdf}
+\\
+Hexagonal icosahedral (642 cells) & Triangular icosahedral
+\\
+\includegraphics[width=\figWidth]
+{graphics/shallowWater+WilliSteady+bucky4+save+alpha_45_cubUpCFCNew+345600+hDiff40.pdf}
+&
+\end{tabular}
+\includegraphics[width=\linewidth]
+{graphics/shallowWater+WilliSteady+legends+hDiff40_hDiff.pdf}
+
+AtmosFOAM using colocated velocity and height, quadratic differencing, semi-implicit
+
+\end{slide}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{slide}{What Grid to Avoid the Pole Problem?}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\renewcommand{\figWidth}{0.49\linewidth}
+
+Height errors (m) after {\color{purple}\bf 40 days} of steady geostrophically balanced flow at 45\de\ to the equator %(Williamson et al 1992 test case 2)
+
+\begin{tabular}{cc}
+Reduced lat-lon (866 cells) & Cubed Sphere (864 cells)
+\\
+\includegraphics[width=\figWidth]
+{graphics/shallowWater+WilliSteady+24x48+save+alpha_45_cubUpCFCNew+3456000+hDiff40.pdf}
+&
+\includegraphics[width=\figWidth]
+{graphics/shallowWater+WilliSteady+cube12+save+alpha_45_cubUpCFCNew+3456000+hDiff40.pdf}
+\\
+Hexagonal icosahedral (642 cells) & Triangular icosahedral
+\\
+\includegraphics[width=\figWidth]
+{graphics/shallowWater+WilliSteady+bucky4+save+alpha_45_cubUpCFCNew+3456000+hDiff40.pdf}
+&
+\end{tabular}
+\includegraphics[width=\linewidth]
+{graphics/shallowWater+WilliSteady+legends+hDiff40_hDiff.pdf}
+
+AtmosFOAM using colocated velocity and height, quadratic differencing, semi-implicit
+
+\end{slide}
+
+
+

@@ -1,0 +1,710 @@
+
+%
+%	NCAR summer colloquium on Numerical Methods
+%       for Global Atmospheric Models
+% 
+%       Conservation
+%
+%	John Thuburn
+%	8 September 2008
+%
+%
+%\documentclass[a4,landscape]{slides}
+%\documentclass[a4,scdouble]{seminar}
+
+\documentclass[a4]{seminar}
+\input seminar.bug
+
+\usepackage{amsmath,amssymb}
+\usepackage[dvips]{graphics,color,graphicx}
+%\usepackage{psfrag}
+%\usepackage{epsfig}
+%\usepackage{psfig}
+%\usepackage{pstcol}
+\usepackage{semlcmss,semcolor}
+\usepackage{fancyhdr}
+
+\renewcommand{\labelitemi}{*}
+
+\newcommand{\re}{\mbox{Re}}
+\newcommand{\im}{\mbox{Im}}
+\newcommand{\ii}{\mathrm{i}}
+
+\newcommand{\R}[1]{\textcolor{red}{#1}}
+\newcommand{\B}[1]{\textcolor{blue}{#1}}
+
+%% Bold symbol macro for standard LaTeX users
+% \newcommand{\boldsymbol}[1]{\mbox{\boldmath $#1$}}
+
+\definecolor{gray}{rgb}{0.8,0.95,0.95}
+\definecolor{lightgray}{rgb}{0.85,0.97,0.97}
+%\definecolor{verylightgray}{rgb}{0.89,0.985,0.985}
+%\definecolor{verylightgray}{rgb}{0.905,0.985,0.985}
+\definecolor{verylightgray}{rgb}{0.985,0.985,0.985}
+
+
+\pagecolor{verylightgray}
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0.2mm}
+\renewcommand{\footrulewidth}{0.2mm}
+\fancyhead[L]{\tiny  Conservation
+\newline John Thuburn }
+%\fancyhead[R]{\mbox{\psfig{file=uelogo.eps,width=15mm}}}
+\fancyhead[R]{\makebox{\resizebox{15mm}{!}{\includegraphics{exeterlogo.eps}}}}
+%\fancyhead[R]{\tiny University of Exeter}
+\fancyfoot[R]{\tiny Page \theslide}
+\fancyfoot[C]{}
+
+\setlength{\slidewidth}{250mm}
+\setlength{\leftmargin}{30mm}
+
+\renewcommand{\slideleftmargin}{30mm}
+\renewcommand{\slidetopmargin}{25mm}
+\renewcommand{\headwidth}{\textwidth}
+
+
+\begin{document}
+
+\slideframe{none}
+
+\pagestyle{fancy}
+
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+
+{\Large \bf
+\B{Conservation}
+}
+
+\B{\bf in numerical model dynamical cores}
+
+\end{center}
+
+\vspace{6mm}
+
+\begin{center}
+{\small Tuesday 23 September, 2008}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\B{\bf Outline}
+
+\vspace{4mm}
+
+\(\bullet\) Conservation properties of the continuous
+adiabatic frictionless governing equations
+
+\(\bullet\) What conservation properties can we obtain in numerical models?
+
+\(\bullet\) Which conservation properties are most relevant/important?
+
+\ \ \ \ Finite resolution effects; the adiabatic frictionless \R{\bf limit}
+
+\ \ \ \ Spurious sources vs physical sources
+
+\vspace{4mm}
+
+(Closely following T 2008, J. Comput. Phys.)
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Conservation properties of the continuous
+adiabatic frictionless governing equations}
+
+\vspace{4mm}
+
+Flux form conservation laws
+
+\vspace{3mm}
+
+Lagrangian conservation laws
+
+\vspace{3mm}
+
+Conserved integral quantities
+
+\vspace{3mm}
+
+Kinematic identities
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Flux form conservation laws}
+
+\begin{displaymath}
+\frac{\partial A}{\partial t}+\nabla .\mathbf{F}=0,
+\end{displaymath}
+
+\vspace{3mm}
+
+\begin{tabular}{|l|cc|}
+\hline
+Quantity
+&
+\( A \)
+&
+\( \mathbf{F} \)
+\\
+\hline
+\hline
+\B{\bf Mass}
+&
+\( \rho \)
+&
+\( \rho \mathbf{u} \)
+\\
+\hline
+\B{\bf Angular momentum}
+&
+\( \rho \widehat{\mathbf{z}}.\left[ \mathbf{r}\times
+\left( \mathbf{u}+\boldsymbol{\Omega} \times \mathbf{r}\right) \right] \)
+&
+\( \mathbf{u}A+p\widehat{\mathbf{z}}\times \mathbf{r} \)
+\\
+\hline
+\B{\bf Energy}
+&
+\( \rho \left( \frac{1}{2}\mathbf{u}^{2}+c_{v}T+\Phi \right)  \)
+&
+\( \mathbf{u}\left( A+p\right) \)
+\\
+\hline
+\end{tabular}
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Lagrangian conservation laws}
+
+\begin{displaymath}
+\frac{D \chi}{D t} = 0 \ \ \Rightarrow \ \ \frac{D f(\chi)}{D t} = 0
+\end{displaymath}
+
+\vspace{2mm}
+
+\begin{tabular}{|l|}
+\hline
+\B{\bf Potential temperature} \( \theta \) \\
+\B{\bf Potential vorticity} \( Q = \boldsymbol{\zeta} . \nabla \theta / \rho \) \\
+\B{\bf Specific tracer} \( q \) or \B{\bf tracer mixing ratio} \( \eta \) \\
+\hline
+\end{tabular}
+
+\vspace{2mm}
+
+Each Lagrangian conservation law generates an infinite family of
+flux form conservation laws
+\begin{displaymath}
+\frac{\partial }{\partial t} \left( \rho f(\chi) \right)
++
+\nabla .\left( \rho \mathbf{u} f(\chi) \right) = 0
+\end{displaymath}
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Conserved integral quantities}
+
+\begin{tabular}{|p{45mm}c|}
+\hline
+\B{\bf Mass per unit \( \theta \)} in an isentropic layer
+&
+\( \mathcal{F}(\theta )=\int \rho /\left| \nabla \theta \right| dA \)
+\\
+\B{\bf Mass per unit \( \theta \)} in an isentropic layer within a material contour
+&
+\( \mathcal{M}=\int_{D}\rho /\left| \nabla \theta \right| dA \)
+\\
+\B{\bf Absolute circulation} around an isentropic material contour
+&
+\( \mathcal{C}=\oint_{\Gamma }\mathbf{v}_{a}.d\mathbf{r}
+=\int_{D}\rho Q/\left| \nabla \theta \right| dA \)
+\\
+\hline
+\end{tabular}
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Kinematic identities}
+
+\vspace{2mm}
+
+The global integrals of horizontal divergence
+\begin{displaymath}
+\int_{D} \delta \, dA
+\end{displaymath}
+and vertical component of vorticity
+\begin{displaymath}
+\int_{D} \zeta \, dA
+\end{displaymath}
+must vanish
+on any isosurface of the vertical coordinate that wraps the sphere.
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Techniques for obtaining or approximating conservation
+properties in numerical models}
+
+\vspace{3mm}
+
+\B{\bf 1 Predict the desired variable using a discrete 
+flux form conservation law}
+\begin{displaymath}
+\frac{A_j^{n+1} - A_j^{n}}{\Delta t} + 
+\frac{F_{j+1/2} - F_{j-1/2}}{\Delta x_j} = 0
+\end{displaymath}
+
+
+E.g.\ \( A \) might be \( \rho \) times specific humidity.
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Techniques for obtaining or approximating conservation
+properties in numerical models}
+
+\vspace{3mm}
+
+\B{\bf 2 Impose discrete analogues of special cancellations}
+
+\vspace{3mm}
+
+E.g.\ Coriolis terms on the C-grid; Arakawa Jacobian
+
+\vspace{3mm}
+
+In some cases there are systematic ways of deriving such schemes
+using `mimetic' methods or Poisson bracket and Nambu bracket ideas
+
+\vspace{3mm}
+
+(May only work globally)
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Techniques for obtaining or approximating conservation
+properties in numerical models}
+
+\vspace{3mm}
+
+\B{\bf 3 Lagrangian conservation properties}
+
+\vspace{2mm}
+
+Use a Lagrangian solution technique (or hybrid such as CASL, PIC)
+
+\vspace{2mm}
+
+Use Lagrangian or quasi-Lagrangian coordinates
+(or at least vertical coordinate)
+
+\vspace{2mm}
+
+Nonoscillatory advection schemes (perhaps combined with `reverse engineering')
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Techniques for obtaining or approximating conservation
+properties in numerical models}
+
+\vspace{3mm}
+
+\B{\bf 4 Special forms of scale-selective dissipation}
+
+\vspace{3mm}
+
+E.g.\ Anticipated potential vorticity method
+
+\vspace{3mm}
+
+E.g.\ Energy backscatter
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Which conservation properties are most relevant/important?}
+
+\vspace{2mm}
+
+\B{\bf Which properties survive averaging? (Finite resolution effects)}
+
+
+\begin{displaymath}
+\frac{\partial \zeta}{\partial t}
++
+\nabla . (\mathbf{v} \zeta)
+=0
+\end{displaymath}
+
+\begin{displaymath}
+\frac{\partial \overline{\zeta}}{\partial t}
++
+\nabla . (\overline{\overline{\mathbf{v}} \overline{\zeta}})
+= \mathrm{SG}
+\end{displaymath}
+
+
+SG term for vorticity is a divergence, but SG term for
+enstrophy is not.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Which conservation properties are most relevant/important?}
+
+\vspace{2mm}
+
+\B{\bf Adiabatic and frictionless, or adiabatic frictionless \R{\it limit} ?}
+
+\vspace{3mm}
+
+Quantities like tracer variance and potential enstrophy that cascade
+downscale are dissipated even in the limit of vanishing viscosity and
+thermal diffusivity. They are \R{\bf non-Robust} invariants
+
+\vspace{2mm}
+
+\R{\bf Dilemma}: attempt to conserve non-robust invariants, then dissipate
+them with a \B{\bf sub-grid model}, or use inherently dissipative
+numerical methods \B{\bf (ILES)}.
+
+\vspace{2mm}
+
+What about \R{\bf energy}?
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+\begin{slide}
+
+\B{\bf Energy}
+
+\vspace{2mm}
+
+Total energy (\( \sim 3 \times 10^9 \mathrm{Jm}^{-2} \)) is made up of
+available and unavailable contributions
+
+\begin{center}
+\makebox{\resizebox{70mm}{!}{{\includegraphics{available2.epsi}}}}
+
+\vspace{2mm}
+
+\begin{tabular}{|c|ccc|}
+\hline
+
+&
+Unavailable PE
+&
+Available PE
+&
+KE
+\\
+Ratio:
+&
+\( 2000 \)
+&
+\( 4 \)
+&
+\( 1 \)
+\\
+\hline
+\end{tabular}
+
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Unavailable and available energy are separately conserved
+
+\vspace{3mm}
+
+Unavailable energy is a function of the \( \mathcal{F}(\theta) \) - almost robust
+
+\vspace{3mm}
+
+Can conserve mass in each model isentropic layer by using \( \theta \) as
+a vertical coordinate
+
+\vspace{3mm}
+
+There is some evidence that about 5-10\% of available energy
+cascades downscale in the free atmosphere (the rest goes upscale before
+being dissipated by the boundary layer)
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\B{\bf Which conservation properties are most relevant/important?}
+
+\vspace{2mm}
+
+\B{\bf Spurious sources vs physical sources} 
+
+\vspace{3mm}
+
+Our numerical solutions should be accurate provided
+spurious numerical sources of conservable quantities
+are much weaker than true physical sources.
+
+\vspace{2mm}
+
+Conveniently expressed in terms of timescales.
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+%\begin{slide}
+
+%\B{\bf Mass}
+
+%\vspace{3mm}
+
+%Essentially no sources of dry air:
+
+%\begin{displaymath}
+%\tau \sim \infty
+%\end{displaymath}
+
+
+%\end{slide}
+
+% -------------------------------------------------------------------------
+
+%\begin{slide}
+
+%\B{\bf Momentum and angular momentum}
+
+%\vspace{3mm}
+
+%Locally, adjustment towards balance is fast
+
+%\( \tau \sim \) few 10s of seconds to
+%few 10s of hours
+
+%\vspace{3mm}
+
+%\B{\bf But}, in a zonal mean, terms in the \( u \) equation
+%are not in geostrophic balance.
+
+%Global mean angular momentum
+%\( \sim \pm 0.4 \times 10^{26} \, \mathrm{kg}\,\mathrm{m}^2 \mathrm{s}^{-1} \)
+
+%Typical surface torque
+%\( \sim \pm 0.5 \times 10^{20} \, \mathrm{kg}\,\mathrm{m}^2 \mathrm{s}^{-2} \)
+
+%\( \tau \sim 10 \, \mathrm{days} \)
+
+%\vspace{2mm}
+
+%(But locally much longer, e.g.\ QBO.)
+
+
+%\end{slide}
+
+% -------------------------------------------------------------------------
+
+%\begin{slide}
+
+%\B{\bf Tracer variance}
+
+%\vspace{2mm}
+
+%Estimates of ``mixdown time'' suggest \( \tau \sim 10-20 \, \mathrm{days} \)
+
+
+%\vspace{3mm}
+
+%\B{\bf Potential enstrophy}
+
+%\vspace{2mm}
+
+%Enstrophy budgets suggest \( \tau \sim 10 \, \mathrm{days} \)
+
+
+
+%\end{slide}
+
+% -------------------------------------------------------------------------
+
+%\begin{slide}
+
+%\B{\bf Unavailable energy}
+
+%\vspace{2mm}
+
+%Global mean \( \sim 3 \times 10^9 \, \mathrm{Jm}^{-2} \)
+
+%Total energy throughput of climate system \( \sim 240 \, \mathrm{Wm}^{-2} \)
+
+%\( \tau \sim 150 \, \mathrm{days} \)
+
+
+
+%\end{slide}
+
+% -------------------------------------------------------------------------
+
+%\begin{slide}
+
+%\B{\bf Available energy}
+
+%Global mean \( \sim 6 \times 10^6 \, \mathrm{Jm}^{-2} \)
+
+%Available energy throughput of the atmosphere \( \sim 2 \, \mathrm{Wm}^{-2} \)
+
+%\( \tau \sim 30 \, \mathrm{days} \)
+
+
+
+%\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\B{\bf Summary of timescales}
+
+\vspace{2mm}
+
+\begin{tabular}{|l|l|l|l|}
+\hline
+Quantity    & Robust     & Cascade & Approx.\ timescale\\
+\hline
+\hline
+Mass        & Yes        &         & Infinite \\  
+\hline
+Momentum    &            &         & Minutes to hours \\
+Angular momentum &       &         & 10~days (locally longer) \\
+\hline
+Potential enstrophy &    & Yes     & 10~days \\
+Tracer variance     &    & Yes     & 10~days \\
+\hline
+Unavailable energy & Almost &      & 150~days \\
+Available energy   &     & Yes (5-10\%) & 20-30~days \\
+\hline
+Entropy      & Almost   &         & Variable \\
+\hline
+\end{tabular}
+
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Some questions to consider}
+
+\( \bullet \) What can we conserve?
+
+\( \bullet \) What is most important to conserve?
+
+\( \bullet \) ILES approach, or conserve plus SG?
+
+\( \bullet \) Special measures for energy conservation?
+
+\( \bullet \) Lagrangian or quasi-Lagrangian vertical coordinate?
+
+\( \bullet \) What else is important, besides conservation?
+
+
+\vspace{2mm}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+
+
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

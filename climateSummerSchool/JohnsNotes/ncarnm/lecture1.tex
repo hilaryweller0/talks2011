@@ -1,0 +1,787 @@
+
+%
+%	NCAR summer colloquium on Numerical Methods
+%       for Global Atmospheric Models
+% 
+%       Basic Dynamics - I
+%
+%	John Thuburn
+%	7 April 2008
+%
+%
+%\documentclass[a4,landscape]{slides}
+%\documentclass[a4,scdouble]{seminar}
+
+\documentclass[a4]{seminar}
+\input seminar.bug
+
+\usepackage{amsmath,amssymb}
+\usepackage[dvips]{graphics,color,graphicx}
+%\usepackage{psfrag}
+%\usepackage{epsfig}
+%\usepackage{psfig}
+%\usepackage{pstcol}
+\usepackage{semlcmss,semcolor}
+\usepackage{fancyhdr}
+
+\renewcommand{\labelitemi}{*}
+
+\newcommand{\re}{\mbox{Re}}
+\newcommand{\im}{\mbox{Im}}
+\newcommand{\ii}{\mathrm{i}}
+
+\newcommand{\R}[1]{\textcolor{red}{#1}}
+\newcommand{\B}[1]{\textcolor{blue}{#1}}
+
+%% Bold symbol macro for standard LaTeX users
+% \newcommand{\boldsymbol}[1]{\mbox{\boldmath $#1$}}
+
+\definecolor{gray}{rgb}{0.8,0.95,0.95}
+\definecolor{lightgray}{rgb}{0.85,0.97,0.97}
+%\definecolor{verylightgray}{rgb}{0.89,0.985,0.985}
+%\definecolor{verylightgray}{rgb}{0.905,0.985,0.985}
+\definecolor{verylightgray}{rgb}{0.985,0.985,0.985}
+
+
+\pagecolor{verylightgray}
+
+\fancyhead{}
+\renewcommand{\headrulewidth}{0.2mm}
+\renewcommand{\footrulewidth}{0.2mm}
+\fancyhead[L]{\tiny  Basic Dynamics-I
+\newline John Thuburn }
+%\fancyhead[R]{\mbox{\psfig{file=uelogo.eps,width=15mm}}}
+\fancyhead[R]{\makebox{\resizebox{15mm}{!}{\includegraphics{exeterlogo.eps}}}}
+%\fancyhead[R]{\tiny University of Exeter}
+\fancyfoot[R]{\tiny Page \theslide}
+\fancyfoot[C]{}
+
+\setlength{\slidewidth}{250mm}
+\setlength{\leftmargin}{30mm}
+
+\renewcommand{\slideleftmargin}{30mm}
+\renewcommand{\slidetopmargin}{25mm}
+\renewcommand{\headwidth}{\textwidth}
+
+
+\begin{document}
+
+\slideframe{none}
+
+\pagestyle{fancy}
+
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+
+{\Large \bf
+\B{Basic Dynamics - I}
+}
+
+\end{center}
+
+\vspace{6mm}
+
+\begin{center}
+{\small Monday 2 June, 2008}
+\end{center}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Bibliography}
+
+\vspace{6mm}
+
+\(\bullet\) An Introduction to Dynamic Meteorology, J.R. Holton,
+Elsevier / Academic Press
+
+\(\bullet\) Atmosphere Ocean Dynamics, A.E. Gill, Academic Press
+
+\(\bullet\) Geophysical Fluid Dynamics, J. Pedlosky, Springer
+
+\(\bullet\) Lectures on Geophysical Fluid Dynamics, R. Salmon, OUP
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\B{\bf Outline}
+
+\vspace{4mm}
+
+\(\bullet\) The multiscale nature of atmospheric dynamics
+
+\(\bullet\) Dynamics in a rotating frame
+
+\(\bullet\) Governing equations
+
+\vspace{4mm}
+
+\(\bullet\) Acoustic waves
+
+\(\bullet\) Inertio-gravity waves
+
+\(\bullet\) Phase velocity and group velocity
+
+\vspace{4mm}
+
+\(\bullet\) Some key conservation properties
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf The multiscale nature of atmospheric dynamics}
+
+\vspace{2mm}
+
+\begin{center}
+\makebox{\resizebox{80mm}{!}{{\includegraphics{multiscale2.epsi}}}}
+\end{center}
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Dynamics in a rotating frame}
+
+\vspace{6mm}
+
+\begin{minipage}[t]{50mm}
+\makebox{\resizebox{45mm}{!}{{\includegraphics{rotate.epsi}}}}
+\end{minipage}
+\ \ \ \ \ \ \ 
+\begin{minipage}[b]{50mm}
+Let
+\vspace{3mm}
+
+\( \mathbf{A} = A_x \mathbf{I} + A_y \mathbf{J} + A_z \mathbf{K} \) \\
+
+\(  \ \ \ \ \ = a_x \mathbf{i} + a_y \mathbf{j} + a_z \mathbf{k} \) 
+\end{minipage}
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Time rate of change of an arbitrary vector}
+
+\vspace{6mm}
+
+
+\begin{eqnarray}
+\left( \frac{D \mathbf{A}}{Dt} \right)_{\mathrm{IF}}
+&
+=
+&
+\mathbf{I} \frac{D A_x}{Dt} +
+\mathbf{J} \frac{D A_y}{Dt} +
+\mathbf{K} \frac{D A_z}{Dt}
+\nonumber \\
+&
+=
+&
+\mathbf{i} \frac{D a_x}{Dt} +
+\mathbf{j} \frac{D a_y}{Dt} +
+\mathbf{k} \frac{D a_z}{Dt}
+\nonumber \\
+&
++
+&
+a_x \left( \frac{D \mathbf{i}}{Dt} \right)_{\mathrm{IF}} +
+a_y \left( \frac{D \mathbf{j}}{Dt} \right)_{\mathrm{IF}} +
+a_z \left( \frac{D \mathbf{k}}{Dt} \right)_{\mathrm{IF}}
+\nonumber \\
+&
+=
+&
+\left( \frac{D \mathbf{A}}{Dt} \right)_{\mathrm{RF}}
++
+\boldsymbol{\Omega} \times \mathbf{A}
+\nonumber
+\end{eqnarray}
+
+\vspace{3mm}
+
+
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Apply to position vector}
+
+\vspace{3mm}
+
+\begin{displaymath}
+\mathbf{u}_{\mathrm{IF}}
+=
+\mathbf{u}_{\mathrm{RF}} + \boldsymbol{\Omega} \times \mathbf{x}
+\end{displaymath}
+
+\vspace{6mm}
+
+\B{\bf Apply to velocity vector}
+
+\vspace{3mm}
+
+\begin{displaymath}
+\mathbf{a}_{\mathrm{IF}}
+=
+\mathbf{a}_{\mathrm{RF}} + 2 \boldsymbol{\Omega} \times \mathbf{u}_{\mathrm{RF}}
++ \boldsymbol{\Omega} \times ( \boldsymbol{\Omega} \times \mathbf{x} )
+\end{displaymath}
+
+\vspace{3mm}
+
+
+\end{slide}
+
+% --------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Governing equations}
+
+\vspace{3mm}
+
+Mass
+
+\begin{displaymath}
+\frac{\partial \rho}{\partial t}  + \nabla . (\rho \mathbf{u})= 0
+\end{displaymath}
+
+\vspace{3mm}
+
+Thermodynamics
+
+\begin{displaymath}
+\frac{D \theta}{Dt} = Q
+\end{displaymath}
+
+\vspace{3mm}
+
+Momentum
+
+\begin{displaymath}
+\frac{D \mathbf{u}}{D t} +
+2 \boldsymbol{\Omega} \times \mathbf{u}
+=
+- \frac{1}{\rho} \nabla p 
+- \nabla \Phi
++ \mathbf{F}
+\end{displaymath}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+along with
+
+\begin{displaymath}
+p = R T \rho
+\end{displaymath}
+
+\vspace{2mm}
+
+and
+
+\begin{displaymath}
+T = \left( \frac{p}{p_{00}} \right)^\kappa \theta
+= \Pi (p) \theta
+\end{displaymath}
+
+\vspace{2mm}
+
+where \( \kappa = R / C_p \).
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Some common approximations}
+
+\vspace{6mm}
+
+\( \bullet \) Spherical geoid: \( \Phi = \Phi(r) \)
+
+\vspace{2mm}
+
+\( \bullet \) Quasi-hydrostatic: neglect \( Dw/Dt\)
+
+\vspace{2mm}
+
+\( \bullet \) Anelastic: \( \nabla ( \rho_0 \mathbf{u}) = 0 \) 
+
+\vspace{2mm}
+
+\( \bullet \) Shallow atmosphere: 
+
+\ \ neglect Coriolis terms involving horizontal component of \( \boldsymbol{\Omega} \);
+
+\ \ replace \( 1/r \) by \( 1/a \);
+
+\ \ neglect some metric terms.
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\makebox{\resizebox{72mm}{!}{{\includegraphics{hierarchy.eps}}}}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf The importance of waves}
+
+\vspace{6mm}
+
+\( \bullet \) Acoustic waves: very fast, energetically very weak
+
+\vspace{2mm}
+
+\( \bullet \) Inertio-gravity waves: fast, energetically weak
+
+\vspace{2mm}
+
+\( \bullet \) Rossby waves and balanced vortical motion: energetically dominant
+
+\vspace{5mm}
+
+\R{\bf But} fast waves are crucial for \R{\bf adjustment} towards balance.
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Acoustic waves}
+
+\vspace{5mm}
+
+Neglect Coriolis and gravity
+
+\begin{displaymath}
+\frac{\partial \rho}{\partial t}  + \nabla . (\rho \mathbf{u})= 0
+\end{displaymath}
+
+\begin{displaymath}
+\frac{D \mathbf{u}}{D t}
+=
+- \frac{1}{\rho} \nabla p 
+\end{displaymath}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Linearize about an isothermal state of rest
+
+\begin{displaymath}
+\frac{\partial \rho}{\partial t}  + \rho_0 \nabla . (\mathbf{u})= 0
+\end{displaymath}
+
+\begin{displaymath}
+\frac{\partial \mathbf{u}}{\partial t}
+=
+- \frac{1}{\rho_0} \nabla p
+=
+- \frac{c^2}{\rho_0} \nabla \rho
+\end{displaymath}
+
+where \( c^2 =  \partial p /\partial \rho |_\theta = R T_0 / (1 - \kappa)\)
+
+\vspace{3mm}
+
+\begin{displaymath}
+\frac{\partial^2 \rho}{\partial t^2}  - c^2 \nabla^2 \rho = 0
+\end{displaymath}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Seek wavelike solutions
+\( \propto \exp\{ \ii \mathbf{k} . \mathbf{x} - \omega t\}\)
+
+to obtain the \R{\bf dispersion relation}
+
+\begin{displaymath}
+\omega^2 = c^2 | \mathbf{k} |^2
+\end{displaymath}
+
+\vspace{3mm}
+
+Note \( \mathbf{u} || \mathbf{k} \): waves are \R{\bf longitudinal}
+
+\vspace{2mm}
+
+Also, acoustic waves are \R{\bf non-dispersive}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+
+\B{\bf Inertio-gravity waves}
+
+\vspace{3mm}
+
+Make the Boussinesq approximation: assume the fluid to be incompresible
+\( \nabla . \mathbf{u} = 0 \), and neglect variations in density
+except where they appear in a buoyancy term, i.e. multiplied by \( g \).
+
+Also neglect Coriolis terms involving the horizontal component
+of \( \boldsymbol{\Omega} \).
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{displaymath}
+\label{B1}
+\frac{Du}{Dt} -fv  = - \frac{1}{\rho_0} \frac{\partial p}{\partial x},
+\end{displaymath}
+\begin{displaymath}
+\label{B2}
+\frac{Dv}{Dt} +fu  = - \frac{1}{\rho_0} \frac{\partial p}{\partial y},
+\end{displaymath}
+\begin{displaymath}
+\label{B3}
+\frac{Dw}{Dt}  = - \frac{1}{\rho_0} \frac{\partial p}{\partial z} + b,
+\end{displaymath}
+\begin{displaymath}
+\label{B4}
+\frac{\partial u}{\partial x} +
+\frac{\partial v}{\partial y} +
+\frac{\partial w}{\partial z} = 0,
+\end{displaymath}
+\begin{displaymath}
+\label{B6}
+\frac{D b}{D t} + w N^2 = 0,
+\end{displaymath}
+
+where
+
+\begin{displaymath}
+b = - g \frac{\rho'}{\rho_0}
+\ \ \ \ \ 
+\mathrm{and}
+\ \ \ \ \ 
+N^2 = - \frac{g}{\rho_0} \frac{\partial \rho_0}{\partial z}
+\end{displaymath}
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Linearize about a hydrostatic state of rest
+
+\begin{displaymath}
+\label{LB1}
+\frac{\partial u}{\partial t} - f v = - \frac{1}{\rho_0} \frac{\partial p}{\partial x},
+\end{displaymath}
+\begin{displaymath}
+\label{LB2}
+\frac{\partial v}{\partial t} + f u = - \frac{1}{\rho_0} \frac{\partial p}{\partial y},
+\end{displaymath}
+\begin{displaymath}
+\label{LB3}
+\frac{\partial w}{\partial t} = - \frac{1}{\rho_0} \frac{\partial p}{\partial z} + b,
+\end{displaymath}
+\begin{displaymath}
+\label{LB4}
+\frac{\partial u}{\partial x} +
+\frac{\partial v}{\partial y} +
+\frac{\partial w}{\partial z} = 0,
+\end{displaymath}
+\begin{displaymath}
+\label{LB6}
+\frac{\partial b}{\partial t} + w N^2 = 0.
+\end{displaymath}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Seek wavelike solutions \( \propto e^{\ii (kx+ly+mz - \omega t)} \)
+to obtain the \R{\bf dispersion relation}
+\begin{displaymath}
+\omega^2 = \frac{(k^2 + l^2) N^2 + m^2 f^2}{k^2 + l^2 + m^2}
+\end{displaymath}
+
+\vspace{3mm}
+
+Note \( \mathbf{u} \perp \mathbf{k} \): waves are \R{\bf transverse}
+
+\vspace{3mm}
+
+For very deep waves, \( m^2 / (k^2 + l^2) \ll 1\), \( \omega^2 \approx N^2 \)
+
+\vspace{3mm}
+
+For very shallow waves, \( (k^2 + l^2) / m^2 \ll 1\), \( \omega^2 \approx f^2 \)
+
+
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Phase velocity}
+
+If a wavelike disturbance is \( \propto \exp \{\ii \phi(\mathbf{x},t) \} \)
+
+wave crests and troughs are surfaces of constant phase \( \phi \).
+
+For a plane wave
+
+\begin{eqnarray}
+\phi & = & \mathbf{k}.\mathbf{x} - \omega t \nonumber \\
+     & = & \mathbf{k}.(\mathbf{x} - \mathbf{c}_p t) \nonumber
+\end{eqnarray}
+
+where \( \mathbf{c}_p = \mathbf{k} \omega / |\mathbf{k}|^2 \)
+is the \R{\bf phase velocity}. Crests and troughs move at velocity
+\( \mathbf{c}_p \).
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Group velocity}
+
+\vspace{3mm}
+
+How does a \B{\bf packet} of waves propagate?
+
+Consider a superposition of two 1D waves with similar wavenumber and
+frequency, satisfying \( \omega = \omega(k) \)
+
+\begin{eqnarray}
+q & = & \frac{1}{2} \left(
+e^{\ii \{ (k + \delta k) x - (\omega + \delta \omega) t\} }
++
+e^{\ii \{ (k - \delta k) x - (\omega - \delta \omega) t\} }
+\right) \nonumber \\
+ & = &
+\cos (\delta k \, x - \delta \omega \, t)
+e^{\ii \{ k x - \omega t\} }
+\end{eqnarray}
+
+
+\begin{center}
+\makebox{\resizebox{70mm}{!}{{\includegraphics{group_schematic.epsi}}}}
+\end{center}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+Individual crests and troughs propagate at the \R{\bf phase velocity}
+
+\begin{displaymath}
+c_p = \omega / k
+\end{displaymath}
+
+but wave packets propagate at the \R{\bf group velocity}
+
+\begin{displaymath}
+c_g = \delta \omega / \delta k \rightarrow \partial \omega / \partial k
+\end{displaymath}
+
+In 3D
+
+\begin{displaymath}
+\mathbf{c}_g = \nabla_{\mathbf{k}} \omega
+= \left( \frac{\partial \omega}{\partial k} ,
+         \frac{\partial \omega}{\partial l} ,
+         \frac{\partial \omega}{\partial m} \right)
+\end{displaymath}
+
+
+\end{slide}
+
+% -------------------------------------------------------------------------
+
+\begin{slide}
+
+\begin{center}
+\B{Matlab demo of phase and group velocity}
+\end{center}
+
+\end{slide}
+
+% ----------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Some key conservation properties}
+
+\vspace{3mm}
+
+Some conservation properties can be expressed as
+
+\begin{displaymath}
+\frac{\partial \mathcal{A}}{\partial t}  + \nabla . (\mathbf{F})= 0
+\end{displaymath}
+
+
+\vspace{2mm}
+
+\B{\bf Mass}
+\begin{displaymath}
+\mathcal{A} = \rho \ \ \ \ \ 
+\mathrm{and} \ \ \ \ \  \mathbf{F} = \rho \mathbf{u}
+\end{displaymath}
+
+\vspace{2mm}
+
+\B{\bf Angular momentum}
+\begin{displaymath}
+\mathcal{A} = \rho \widehat{\mathbf{z}}.\left[ \mathbf{r}\times
+\left( \mathbf{u}+\boldsymbol{\Omega} \times \mathbf{r}\right) \right] \ \ \ \ \ 
+\mathrm{and} \ \ \ \ \   
+\mathbf{F} = \mathbf{u} \mathcal{A}+p\widehat{\mathbf{z}}\times \mathbf{r}
+\end{displaymath}
+
+\vspace{2mm}
+
+\B{\bf Energy}
+\begin{displaymath}
+\mathcal{A} = \rho (\mathbf{u}^2 / 2 + C_v T + \Phi) \ \ \ \ \ 
+\mathrm{and} \ \ \ \ \ 
+\mathbf{F} = \mathbf{u}(\mathcal{A} + p)
+\end{displaymath}
+
+
+
+
+\end{slide}
+
+% ----------------------------------------------------------------------------
+
+\begin{slide}
+
+\B{\bf Potential temperature}
+\begin{displaymath}
+\frac{D \theta}{Dt} = 0
+\end{displaymath}
+
+\vspace{2mm}
+
+\B{\bf Potential vorticity}
+\begin{displaymath}
+\frac{DQ}{Dt} = 0
+\end{displaymath}
+where \( Q = \boldsymbol{\zeta}.\nabla \theta / \rho \)
+
+\vspace{2mm}
+
+\B{\bf Potential enstrophy}
+\begin{displaymath}
+\mathcal{A} = \rho Q^2 / 2 \ \ \ \ \ 
+\mathrm{and} \ \ \ \ \  \mathbf{F} = \mathbf{u} \mathcal{A}
+\end{displaymath}
+
+
+\end{slide}
+
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+% ----------------------------------------------------------------------------
+
+
+
+
+
+
+\end{document}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

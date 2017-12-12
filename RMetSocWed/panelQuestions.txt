@@ -1,0 +1,7 @@
+Next generation modelling?
+
+How far off is an operational adaptive meshing?
+How can we achieve better parallel performance?
+What grid for fixed resolution?
+What numerical scheme?
+How to achieve local refinement (essential for short range weather forecasting)

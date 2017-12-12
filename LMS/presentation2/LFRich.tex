@@ -1,0 +1,187 @@
+\begin{slide}{}
+
+\begin{minipage}{0.38\linewidth}
+\includegraphics[width=\linewidth]{../Ed/rich_factory/RichardsonPhoto.png}
+\end{minipage}
+\hfill
+\begin{minipage}{0.58\linewidth}
+{\large\bf Lewis Fry Richardson} (1881-1953)
+dreamed of solving these equations with a human forecasting factory:
+
+\includegraphics[width=\linewidth]{../Ed/rich_factory/RichardsonFactory.png}
+
+\end{minipage}
+
+\end{slide}
+
+\begin{slide}{}
+
+\begin{minipage}[t]{0.65\linewidth}
+    \includegraphics[height=\textheight]{graphics/UK_labels.pdf}
+\end{minipage}
+\begin{minipage}[t]{0.35\linewidth}
+    \includegraphics[width=\linewidth]{../Ed/HW_forecastFactory/Tinit.pdf}\\
+    $\delta t = 1\text{hour} = 3600\text{s}$
+\end{minipage}
+\end{slide}
+
+\begin{slide}{}
+
+\everymath{\displaystyle}
+\definecolor{grey}{rgb}{0.6,0.6,0.6}
+\newcommand{\gbox}[1]{~\boxed{\color{grey} #1}~}
+\newcommand{\timeStep}
+{
+$
+\gbox{~~~T_\text{old}~~}
+-\frac{\gbox{~~~\delta t~~~}}{2\tims\gbox{~~~d~~~}}
+\biggl(\gbox{~~\text{u}~~} ~\bigl( \gbox{~~~T_\text{west}~~}
+                          - \gbox{~~~T_\text{east}~~} \bigr)
++      \gbox{~~\text{v}~~} ~\bigl( \gbox{~~~T_\text{north}~~}
+                          - \gbox{~~~T_\text{south}~~} \bigr)
+\biggr)
+= \gbox{~~~T_\text{new}~~}$
+}
+
+\newcommand{\workSheet}[6]
+{
+\begin{center}
+{\normalsize\bf #1}
+
+\small
+\begin{minipage}[t]{0.5\linewidth}
+\begin{tabular}[t]{llccl}
+\bf Initial conditions    & temperature  & $T$ & $=$    & $#2^oC$\\ \\
+\bf Fixed inputs & wind in $x$ direction & u   & $=$    & $#3$ m/s\\
+             & wind in $y$ direction & v   & $=$    & $#4$ m/s\\
+             & time step             & $\delta t$ & $=$ & $3600$ s \\
+             & space step            & $d$        & $=$ & $100,000$ m
+\end{tabular}
+\end{minipage}
+\begin{minipage}[t]{0.48\linewidth}
+\begin{tabular}[t]{ll}
+\bf Boundary Conditions & #5 \\ \\
+\bf Surroundings        & #6
+\end{tabular}
+\end{minipage}
+\begin{enumerate}\raggedleft
+\item \timeStep
+\item \timeStep \\$\pm\gbox{~~~~T_\text{extra}~~~~}= \gbox{~~~T_\text{new}~~}$
+\item \timeStep
+\end{enumerate}
+\end{center}
+}
+
+\parskip 0pt
+\workSheet{London}{23}{6}{2}{$T_\text{south} = 25^oC$}
+          {$T_\text{north} = $ Peterborough \\& $T_\text{east} = $ Southend \\&
+          $T_\text{west} = $ Bristol}
+
+\begin{minipage}{0.2\linewidth}\raggedright
+All initial conditions:
+\end{minipage}
+\begin{tabular}{c|cc|cc|cc|cc|c}
+&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15} \\
+\hline 17 & Dumfries & 17 & Carlisle  & 17 & Newcastle & 17 & Dogger & 17&17\\
+\hline 19 & Irish Sea & 19 & Manchester & 19 & Grimsby & 19 & Humber & 19&19\\
+\hline 21 & Snowdon & 21 & Birmingham & 21 & Peterborough & 21 & Norwich & 21&21\\
+\hline 23 & Swansea & 23 & Bristol & 23 & London & 23 & Southend & 23&23\\ \hline
+&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}
+\end{tabular}
+\end{slide}
+
+\begin{slide}{Between steps 2 and 3:}
+\heading{Sunshine!}
+
+\begin{list0}
+\item The sun has come out in the south. 
+    \begin{list1}
+    \item Add 2\de C to the temperature in Swansea, Bristol and Southend
+    \item Add 5\de C to the temperature in London due to the urban heat island
+    \end{list1}
+\end{list0}
+
+\vskip 2ex
+\heading{Mountains!}
+
+\begin{list0}
+\item The air is rising over the mountains. 
+    \begin{list1}
+    \item Subtract 4\de C from the temperature in Snowdon
+    \end{list1}
+\end{list0}
+
+\end{slide}
+
+%\begin{slide}{Clear skies at night!}
+
+%\begin{list0}
+%\item The sun has set and clear skies lead to radiative cooling to space
+%    \begin{list1}
+%    \item Subtract 5\de C from the temperature in Peterborough and Norwich
+%    \end{list1}
+%\end{list0}
+
+%\end{slide}
+
+\begin{slide}{}
+
+\begin{minipage}{0.15\linewidth}\raggedright
+After step 1\end{minipage}
+\begin{tabular}{c|cc|cc|cc|cc|c}
+&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15} \\
+\hline 17 & Dumfries & 16.6 & Carlisle  & 16.9 & Newcastle & 17.1 & Dogger & 17.4&17\\
+\hline 19 & Irish Sea & 18.6 & Manchester & 18.9 & Grimsby & 19.1 & Humber & 19.4&19\\
+\hline 21 & Snowdon & 20.6 & Birmingham & 20.9 & Peterborough & 21.1 & Norwich & 21.4&21\\
+\hline 23 & Swansea & 22.6 & Bristol & 22.9 & London & 23.1 & Southend & 23.4&23\\ \hline
+&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}
+\end{tabular}
+
+\begin{minipage}{0.15\linewidth}\raggedright
+After step 2\end{minipage}
+\begin{tabular}{c|cc|cc|cc|cc|c}
+&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15} \\
+\hline 17 & Dumfries & 16.2 & Carlisle  & 16.8 & Newcastle & 17.3 & Dogger & 17.9&17\\
+\hline 19 & Irish Sea & 18.2 & Manchester & 18.8 & Grimsby & 19.3 & Humber & 19.8&19\\
+\hline 21 & Snowdon & 16.2 & Birmingham & 20.7 & Peterborough & 21.2 & Norwich & 21.8&21\\
+\hline 23 & Swansea & 24.1 & Bristol & 24.7 & London & 28.2 & Southend & 25.8 & 23\\ \hline
+&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}
+\end{tabular}
+
+\begin{minipage}{0.15\linewidth}\raggedright
+After step 3\end{minipage}
+\begin{tabular}{c|cc|cc|cc|cc|c}
+&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15}&\multicolumn{2}{c|}{15} \\
+\hline 17 & Dumfries & 15.8 & Carlisle  & 16.8 & Newcastle & 17.6 & Dogger & 18.4&17\\
+\hline 19 & Irish Sea & 18.2 & Manchester & 18.7 & Grimsby & 19.5 & Humber & 20.2 &19\\
+\hline 21 & Snowdon & 15.6 & Birmingham & 20.3 & Peterborough & 21.5 & Norwich & 22.5 &21\\
+\hline 23 & Swansea & 23 & Bristol & 24.1 & London & 28.2 & Southend & 26.7 & 23\\ \hline
+&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}&\multicolumn{2}{c|}{25}
+\end{tabular}
+
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/Tinit.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T1.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T2.pdf}
+}
+\end{slide}
+
+\begin{slide}{}
+{\centering
+\includegraphics[height=\textheight]{../Ed/HW_forecastFactory/T3.pdf}
+}
+\end{slide}
+

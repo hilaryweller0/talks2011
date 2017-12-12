@@ -1,0 +1,55 @@
+How Climate Models work and could they be better?
+Dr Hilary Weller, University of Reading
+
+I will describe some of the physics behind how the real climate works, some of the mathematics involved in creating a computer model of the climate in order to make climate predictions and how climate data is gathered in order to test the models. We will see that, although climate models are far from perfect, some predictions can be made with confidence, although there are still ways in which climate models could be improved in order to provided predictions, for example, of the regional impacts of climate change.
+
+1. Title slide
+
+2. Motivation: Government policy is based on climate change predictions (eg rises in energy costs, new clean power stations, emmisions regulations, building new reservoirs, flood defences). Climate change predictions are based on climate models. How do they work? Are they good enough? Could they be better?
+
+3. Climate models solve the fundamental equations of motion, thermodynamics and heat transfer:
+big set of equations
+These are very accurate representations of the natural world
+But they cannot be solved analytically:
+
+4. Approximate Solution of Equations
+Divide atmosphere, ocean and land surfaces into grid boxes and assign just one value to each grid box. 
+palais.png and Julia's slide on Page21 (columns)
+
+5. Finite difference form of equations (just like a weather forecast model)
+
+6. Radiation just in vertical columns
+
+7. Julia's slide 22 on components of a cliamte model
+
+8. How accurate is this?
+what resolution is used?
+Is this sufficient?
+What is missed?
+
+9. Comparison of thunder cloud size with grid box size. Or fair weather cumulus
+
+10. Hence we need parametrisations
+
+11. Can we trust these climate models? results from IPCC
+
+12. How is the data gathered to test the models?
+
+13. regional climate changes not known
+
+14. Will regional climate models help?
+no because climate in mid-latitudes is influenced by the strength and location of tropical rainfall
+
+15. Ever higher resolution
+massively parallel super-computers
+scaling problems on lat-lon grids
+
+16. Quasi-uniform grids
+
+17. Adaptive grids for tropical rainfall? 
+
+18. Conclusions
+Climate models are accurate enough to know that human activity is warming the global climate. So good enough to inform policy aimed at reducing emmsions
+Climate models are not accurate enough to predict regional climate
+Mathematicians and scientists needed to create the next generation of climate models that can make these predictions
+
